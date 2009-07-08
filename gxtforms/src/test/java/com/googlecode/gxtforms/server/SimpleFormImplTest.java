@@ -20,7 +20,7 @@ public class SimpleFormImplTest {
         assertEquals("name", fields.get(0).getName());
         assertEquals("Name", fields.get(0).getLabel());
         assertEquals(FieldType.Text, fields.get(0).getType());
-        
+
         assertEquals("age", fields.get(1).getName());
         assertEquals("Age", fields.get(1).getLabel());
         assertEquals(FieldType.SelectOne, fields.get(1).getType());
@@ -33,7 +33,7 @@ public class SimpleFormImplTest {
         assertEquals("username", fields.get(0).getName());
         assertEquals("Login", fields.get(0).getLabel());
         assertEquals(FieldType.Text, fields.get(0).getType());
-        
+
         assertEquals("yearsOfAge", fields.get(1).getName());
         assertEquals("Years of Age", fields.get(1).getLabel());
         assertEquals(FieldType.SelectOne, fields.get(1).getType());
@@ -42,6 +42,11 @@ public class SimpleFormImplTest {
     @Test
     public void testNoOrderForm() {
         assertEquals(3, new NoOrderForm().getFields().size());
+    }
+
+    @Test(expected = FieldConfigurationException.class)
+    public void test2FormFields() {
+        new InvalidForm().getFields();
     }
 
 }
@@ -60,10 +65,10 @@ class SimpleFormDemo extends FormImpl {
 @SuppressWarnings("unused")
 class CustomFormDemo extends FormImpl {
 
-    @CharField(label = "Login", name="username", order = 1)
+    @CharField(label = "Login", name = "username", order = 1)
     private String name;
 
-    @ChooseOneField(label = "Years of Age", name="yearsOfAge", order = 2)
+    @ChooseOneField(label = "Years of Age", name = "yearsOfAge", order = 2)
     private int age;
 
 }
@@ -82,4 +87,10 @@ class NoOrderForm extends FormImpl {
 
 }
 
+@SuppressWarnings("unused")
+class InvalidForm extends FormImpl {
 
+    @CharField
+    @ChooseOneField
+    private String a;
+}

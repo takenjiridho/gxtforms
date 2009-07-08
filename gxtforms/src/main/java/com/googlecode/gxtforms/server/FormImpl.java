@@ -21,7 +21,7 @@ public class FormImpl implements Form {
     public List<FieldConfiguration> getFields() {
         List<FieldConfiguration> fields = new ArrayList<FieldConfiguration>();
 
-        for (Map.Entry<Field,Annotation> fieldEntry : getFieldAnnotations().entrySet()) {
+        for (Map.Entry<Field, Annotation> fieldEntry : getFieldAnnotations().entrySet()) {
             FieldConfiguration fieldConfig = buildFieldConfiguration(fieldEntry.getValue());
             cleanDefaults(fieldConfig, fieldEntry.getKey());
             fields.add(fieldConfig);
@@ -39,17 +39,16 @@ public class FormImpl implements Form {
 
         return fields;
     }
-    
+
     public void cleanDefaults(FieldConfiguration fieldConfiguration, Field field) {
         if (StringUtils.isEmpty(fieldConfiguration.getName())) {
             fieldConfiguration.setName(field.getName());
         }
-        
+
         if (StringUtils.isEmpty(fieldConfiguration.getLabel())) {
             fieldConfiguration.setLabel(WordUtils.capitalize(fieldConfiguration.getName()));
         }
     }
-    
 
     public FieldConfiguration buildFieldConfiguration(Annotation formField) {
         FieldConfiguration config = new FieldConfiguration();
@@ -57,8 +56,7 @@ public class FormImpl implements Form {
         config.setType((FieldType) invoke("fieldType", formField));
         config.setLabel((String) invoke("label", formField));
         config.setOrder((Integer) invoke("order", formField));
-        
-        
+
         return config;
     }
 
@@ -74,7 +72,7 @@ public class FormImpl implements Form {
         Map<Field, Annotation> allFieldAnnotations = new HashMap<Field, Annotation>();
         Field[] fields = getMemberFields();
         for (Field field : fields) {
-            List<Annotation> aFieldsAnnotations = getFormFields(field.getAnnotations());
+            List<Annotation> aFieldsAnnotations = getFormFields(field, field.getAnnotations());
             if (aFieldsAnnotations.size() > 0) {
                 allFieldAnnotations.put(field, aFieldsAnnotations.get(0));
             }
@@ -86,15 +84,17 @@ public class FormImpl implements Form {
         return getClass().getDeclaredFields();
     }
 
-    public List<Annotation> getFormFields(Annotation[] annots) {
+    public List<Annotation> getFormFields(Field field, Annotation[] annots) {
         List<Annotation> annotations = new ArrayList<Annotation>();
         for (Annotation annot : annots) {
             if (annot.annotationType().getAnnotation(FormField.class) != null) {
                 annotations.add(annot);
             }
         }
-        assert annotations.size() < 2; // only zero or 1 FormField annotation is
-                                       // allowed
+        if (annotations.size() > 1) {
+            throw new FieldConfigurationException("Invalid field configuration for '" + field.getName()
+                    + "'. Only 1 FormField annotation is allowed per field.");
+        }
         return annotations;
     }
 }
