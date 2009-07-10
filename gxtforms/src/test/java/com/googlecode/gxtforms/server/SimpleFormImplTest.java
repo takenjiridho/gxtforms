@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import com.googlecode.gxtforms.annotations.CharField;
 import com.googlecode.gxtforms.annotations.ChooseOneField;
+import com.googlecode.gxtforms.client.FieldConfigurationException;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 
