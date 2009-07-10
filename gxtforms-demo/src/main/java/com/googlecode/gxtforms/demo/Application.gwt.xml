@@ -1,3 +1,4 @@
 <module>
-    <entry-point class="com.googlecode.gxtforms.demo.client.Application" />
+    <inherits name='com.googlecode.gxtforms.GXTForms'/>
+    <entry-point class='com.googlecode.gxtforms.demo.client.Application' />
 </module>

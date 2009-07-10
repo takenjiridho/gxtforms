@@ -13,11 +13,19 @@
     </properties>
 
     <dependencies>
-        <!--
-            <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> <version>${gwtVersion}</version>
-            <scope>provided</scope> </dependency> <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-servlet</artifactId>
-            <version>${gwtVersion}</version> <scope>compile</scope> </dependency>
-        -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.googlecode.gxtforms</groupId>
             <artifactId>gxtforms</artifactId>
@@ -27,12 +35,18 @@
 
 
     <build>
+        <outputDirectory>war/WEB-INF/classes</outputDirectory>
         <plugins>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>1.1</version>
+                <configuration>
+                    <gwtVersion>${gwtVersion}</gwtVersion>
+                    <module>com.googlecode.gxtforms.demo.Application</module>
+                    <runTarget>Application.html</runTarget>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -41,6 +55,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1-beta-1</version>
