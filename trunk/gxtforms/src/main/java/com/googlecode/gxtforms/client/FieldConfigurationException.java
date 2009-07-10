@@ -1,7 +1,8 @@
-package com.googlecode.gxtforms.server;
+package com.googlecode.gxtforms.client;
+
 
 @SuppressWarnings("serial")
-public class FieldConfigurationException extends RuntimeException {
+public class FieldConfigurationException extends FormConfigurationException {
 
     public FieldConfigurationException() {
         super();

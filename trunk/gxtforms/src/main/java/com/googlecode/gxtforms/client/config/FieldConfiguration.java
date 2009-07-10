@@ -1,6 +1,9 @@
 package com.googlecode.gxtforms.client.config;
 
-public class FieldConfiguration {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class FieldConfiguration implements Serializable {
 
     String name;
     String label;
@@ -9,6 +12,7 @@ public class FieldConfiguration {
     int width;
     int order;
     FieldType type;
+    String emptyText;
 
     public FieldConfiguration() {
     }
@@ -67,6 +71,14 @@ public class FieldConfiguration {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public String getEmptyText() {
+        return emptyText;
+    }
+
+    public void setEmptyText(String emptyText) {
+        this.emptyText = emptyText;
     }
 
 }

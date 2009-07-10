@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
 import com.googlecode.gxtforms.annotations.FormField;
+import com.googlecode.gxtforms.client.FieldConfigurationException;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 

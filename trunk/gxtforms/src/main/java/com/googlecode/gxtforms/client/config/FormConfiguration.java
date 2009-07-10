@@ -1,8 +1,10 @@
 package com.googlecode.gxtforms.client.config;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class FormConfiguration {
+@SuppressWarnings("serial")
+public class FormConfiguration implements Serializable {
 
     List<FieldConfiguration> fieldConfigurations;
 
