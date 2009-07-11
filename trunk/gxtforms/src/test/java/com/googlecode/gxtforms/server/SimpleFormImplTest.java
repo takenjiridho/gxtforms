@@ -2,6 +2,7 @@ package com.googlecode.gxtforms.server;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.junit.Test;
 import com.googlecode.gxtforms.annotations.CharField;
 import com.googlecode.gxtforms.annotations.ChooseOneField;
 import com.googlecode.gxtforms.client.FieldConfigurationException;
+import com.googlecode.gxtforms.client.FieldOption;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 
@@ -34,7 +36,6 @@ public class SimpleFormImplTest {
         assertEquals("username", fields.get(0).getName());
         assertEquals("Login", fields.get(0).getLabel());
         assertEquals(FieldType.Text, fields.get(0).getType());
-
         assertEquals("yearsOfAge", fields.get(1).getName());
         assertEquals("Years of Age", fields.get(1).getLabel());
         assertEquals(FieldType.SelectOne, fields.get(1).getType());
@@ -48,6 +49,21 @@ public class SimpleFormImplTest {
     @Test(expected = FieldConfigurationException.class)
     public void test2FormFields() {
         new InvalidForm().getFields();
+    }
+
+    @Test()
+    public void testEnumField() {
+        FieldConfiguration fieldConfig = new EnumForm().getFields().get(0);
+        List<? extends FieldOption<?>> options = fieldConfig.getOptions();
+        assertEquals(4, options.size());
+        
+        TestEnum[] enums = EnumSet.allOf(TestEnum.class).toArray(new TestEnum[0]);
+        
+        for (int i = 0; i < options.size(); i++) {
+            assertEquals(enums[i], options.get(i).getValue());
+            assertEquals(enums[i].name(), options.get(i).getLabel());
+        }
+        
     }
 
 }
@@ -94,4 +110,12 @@ class InvalidForm extends FormImpl {
     @CharField
     @ChooseOneField
     private String a;
+}
+
+@SuppressWarnings("unused")
+class EnumForm extends FormImpl {
+
+    @ChooseOneField
+    private TestEnum test;
+
 }

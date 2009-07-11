@@ -9,7 +9,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>FormService</servlet-name>
-        <url-pattern>/demo/FormService</url-pattern>
+        <url-pattern>/com.googlecode.gxtforms.demo.Application/FormService</url-pattern>
     </servlet-mapping>
 
 </web-app>

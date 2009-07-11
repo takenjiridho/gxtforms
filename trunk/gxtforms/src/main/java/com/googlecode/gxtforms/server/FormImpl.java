@@ -13,6 +13,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
 import com.googlecode.gxtforms.annotations.FormField;
+import com.googlecode.gxtforms.annotations.HiddenField;
+import com.googlecode.gxtforms.client.EnumFieldOption;
 import com.googlecode.gxtforms.client.FieldConfigurationException;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
@@ -23,7 +25,7 @@ public class FormImpl implements Form {
         List<FieldConfiguration> fields = new ArrayList<FieldConfiguration>();
 
         for (Map.Entry<Field, Annotation> fieldEntry : getFieldAnnotations().entrySet()) {
-            FieldConfiguration fieldConfig = buildFieldConfiguration(fieldEntry.getValue());
+            FieldConfiguration fieldConfig = buildFieldConfiguration(fieldEntry.getKey(), fieldEntry.getValue());
             cleanDefaults(fieldConfig, fieldEntry.getKey());
             fields.add(fieldConfig);
         }
@@ -51,12 +53,22 @@ public class FormImpl implements Form {
         }
     }
 
-    public FieldConfiguration buildFieldConfiguration(Annotation formField) {
+    @SuppressWarnings("unchecked")
+    public FieldConfiguration buildFieldConfiguration(Field field, Annotation formField) {
         FieldConfiguration config = new FieldConfiguration();
         config.setName((String) invoke("name", formField));
         config.setType((FieldType) invoke("fieldType", formField));
-        config.setLabel((String) invoke("label", formField));
+        if (! (formField instanceof HiddenField)) {
+            config.setLabel((String) invoke("label", formField));
+        }
         config.setOrder((Integer) invoke("order", formField));
+        if (Enum.class.isAssignableFrom(field.getType())) {
+            List<EnumFieldOption> options = new ArrayList<EnumFieldOption>();
+            for (Enum e : ((Class<Enum>) field.getType()).getEnumConstants()) {
+                options.add(new EnumFieldOption(e, e.name()));
+            }
+            config.setOptions(options);
+        }
 
         return config;
     }

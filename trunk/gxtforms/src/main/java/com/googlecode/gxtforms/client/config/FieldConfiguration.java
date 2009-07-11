@@ -1,6 +1,9 @@
 package com.googlecode.gxtforms.client.config;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.googlecode.gxtforms.client.FieldOption;
 
 @SuppressWarnings("serial")
 public class FieldConfiguration implements Serializable {
@@ -13,6 +16,7 @@ public class FieldConfiguration implements Serializable {
     int order;
     FieldType type;
     String emptyText;
+    List<? extends FieldOption<?>> options;
 
     public FieldConfiguration() {
     }
@@ -79,6 +83,14 @@ public class FieldConfiguration implements Serializable {
 
     public void setEmptyText(String emptyText) {
         this.emptyText = emptyText;
+    }
+
+    public List<? extends FieldOption<?>> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<? extends FieldOption<?>> options) {
+        this.options = options;
     }
 
 }
