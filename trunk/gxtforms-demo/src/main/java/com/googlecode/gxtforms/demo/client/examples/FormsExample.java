@@ -1,4 +1,4 @@
-package com.googlecode.gxtforms.demo.client.example;
+package com.googlecode.gxtforms.demo.client.examples;
 
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.VerticalPanel;
@@ -16,33 +16,26 @@ public class FormsExample extends LayoutContainer {
     private VerticalPanel vp;
 
     public FormsExample() {
-      vp = new VerticalPanel();
-      vp.setSpacing(10);
+        vp = new VerticalPanel();
+        vp.setSpacing(10);
 
-      FormServiceAsync service = GWT.create(FormService.class);
-      service.getFormConfiguration(SimpleForm.class.getName(), new AsyncCallback<FormConfiguration>() {
-          public void onSuccess(FormConfiguration result) {
-              vp.add(new GXTFormBuilder().buildFormPanel(result));
-              vp.layout();
-          }
-
-          public void onFailure(Throwable caught) {
-
-          }
-      });
-      
-      
     }
 
     @Override
     protected void onRender(Element parent, int index) {
-      super.onRender(parent, index);
-      createForm1();
-      add(vp);
+        super.onRender(parent, index);
+        add(vp);
+        FormServiceAsync service = GWT.create(FormService.class);
+        service.getFormConfiguration(SimpleForm.class.getName(), new AsyncCallback<FormConfiguration>() {
+            public void onSuccess(FormConfiguration result) {
+                vp.add(new GXTFormBuilder().buildFormPanel(result));
+                vp.layout();
+            }
+
+            public void onFailure(Throwable caught) {
+
+            }
+        });
     }
 
-    private void createForm1() {
-
-    }
-
-  }
+}

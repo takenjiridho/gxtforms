@@ -13,7 +13,7 @@ import java.util.List;
 import com.extjs.gxt.ui.client.data.BaseTreeModel;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.TreeModel;
-import com.googlecode.gxtforms.demo.client.example.FormsExample;
+import com.googlecode.gxtforms.demo.client.examples.FormsExample;
 import com.googlecode.gxtforms.demo.client.images.ExampleImages;
 import com.googlecode.gxtforms.demo.client.model.Category;
 import com.googlecode.gxtforms.demo.client.model.Entry;
