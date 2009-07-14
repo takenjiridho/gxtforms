@@ -69,8 +69,8 @@ public class Entry extends BaseTreeModel {
     String name = o.getClass().getName();
 
     name = name.substring(name.lastIndexOf("examples.") + 9);
-    name = "code/" + name + ".html";
-    name = name.replaceFirst("\\.", "/");
+    name = "code/" + name + ".txt";
+//    name = name.replaceFirst("\\.", "/");
 
     if (!Application.isExplorer()) {
       name = "../../" + name;
