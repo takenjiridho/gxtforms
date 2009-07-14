@@ -1,6 +1,6 @@
 package com.googlecode.gxtforms.server;
 
-public enum TestEnum {
+public enum EnumExample {
 
     A, B, C, D
     

@@ -57,7 +57,7 @@ public class SimpleFormImplTest {
         List<? extends FieldOption<?>> options = fieldConfig.getOptions();
         assertEquals(4, options.size());
         
-        TestEnum[] enums = EnumSet.allOf(TestEnum.class).toArray(new TestEnum[0]);
+        EnumExample[] enums = EnumSet.allOf(EnumExample.class).toArray(new EnumExample[0]);
         
         for (int i = 0; i < options.size(); i++) {
             assertEquals(enums[i], options.get(i).getValue());
@@ -116,6 +116,6 @@ class InvalidForm extends FormImpl {
 class EnumForm extends FormImpl {
 
     @ChooseOneField
-    private TestEnum test;
+    private EnumExample test;
 
 }
