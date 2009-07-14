@@ -13,12 +13,14 @@
     </properties>
 
     <dependencies>
+        
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
             <version>${gwtVersion}</version>
             <scope>provided</scope>
         </dependency>
+        
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
@@ -37,6 +39,7 @@
             <artifactId>gxtforms</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
+        
     </dependencies>
 
 
