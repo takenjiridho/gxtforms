@@ -9,14 +9,24 @@ import com.googlecode.gxtforms.client.FieldOption;
 public class FieldConfiguration implements Serializable {
 
     String name;
-    String label;
-    boolean required;
+    String fieldLabel;
+    boolean allowBlank;
     int maxLength;
     int width;
-    int order;
-    FieldType type;
+    int index;
+    FieldType fieldType;
     String emptyText;
     List<? extends FieldOption<?>> options;
+    String radioGroup;
+    boolean autoValidate;
+    String labelSeparator;
+    String labelStyle;
+    String messageTarget;
+    boolean validateOnBlur;
+    int validationDelay;
+    boolean hideLabel;
+    boolean readOnly;
+    Orientation orientation;
 
     public FieldConfiguration() {
     }
@@ -29,20 +39,20 @@ public class FieldConfiguration implements Serializable {
         this.name = name;
     }
 
-    public String getLabel() {
-        return label;
+    public String getFieldLabel() {
+        return fieldLabel;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setFieldLabel(String label) {
+        this.fieldLabel = label;
     }
 
-    public boolean isRequired() {
-        return required;
+    public boolean isAllowBlank() {
+        return allowBlank;
     }
 
-    public void setRequired(boolean required) {
-        this.required = required;
+    public void setAllowBlank(boolean allowBlank) {
+        this.allowBlank = allowBlank;
     }
 
     public int getMaxLength() {
@@ -61,20 +71,20 @@ public class FieldConfiguration implements Serializable {
         this.width = width;
     }
 
-    public FieldType getType() {
-        return type;
+    public FieldType getFieldType() {
+        return fieldType;
     }
 
-    public void setType(FieldType type) {
-        this.type = type;
+    public void setFieldType(FieldType type) {
+        this.fieldType = type;
     }
 
-    public int getOrder() {
-        return order;
+    public int getIndex() {
+        return index;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getEmptyText() {
@@ -91,6 +101,86 @@ public class FieldConfiguration implements Serializable {
 
     public void setOptions(List<? extends FieldOption<?>> options) {
         this.options = options;
+    }
+
+    public String getRadioGroup() {
+        return radioGroup;
+    }
+
+    public void setRadioGroup(String radioGroup) {
+        this.radioGroup = radioGroup;
+    }
+
+    public boolean isAutoValidate() {
+        return autoValidate;
+    }
+
+    public void setAutoValidate(boolean autoValidate) {
+        this.autoValidate = autoValidate;
+    }
+
+    public String getLabelSeparator() {
+        return labelSeparator;
+    }
+
+    public void setLabelSeparator(String labelSeparator) {
+        this.labelSeparator = labelSeparator;
+    }
+
+    public String getLabelStyle() {
+        return labelStyle;
+    }
+
+    public void setLabelStyle(String labelStyle) {
+        this.labelStyle = labelStyle;
+    }
+
+    public String getMessageTarget() {
+        return messageTarget;
+    }
+
+    public void setMessageTarget(String messageTarget) {
+        this.messageTarget = messageTarget;
+    }
+
+    public boolean isValidateOnBlur() {
+        return validateOnBlur;
+    }
+
+    public void setValidateOnBlur(boolean validateOnBlur) {
+        this.validateOnBlur = validateOnBlur;
+    }
+
+    public int getValidationDelay() {
+        return validationDelay;
+    }
+
+    public void setValidationDelay(int validationDelay) {
+        this.validationDelay = validationDelay;
+    }
+
+    public boolean isHideLabel() {
+        return hideLabel;
+    }
+
+    public void setHideLabel(boolean hideLabel) {
+        this.hideLabel = hideLabel;
+    }
+
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
     }
 
 }

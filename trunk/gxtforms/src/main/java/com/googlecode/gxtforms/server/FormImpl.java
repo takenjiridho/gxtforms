@@ -12,12 +12,15 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
+import com.googlecode.gxtforms.annotations.CheckBoxField;
 import com.googlecode.gxtforms.annotations.FormField;
 import com.googlecode.gxtforms.annotations.HiddenField;
+import com.googlecode.gxtforms.annotations.RadioField;
 import com.googlecode.gxtforms.client.EnumFieldOption;
 import com.googlecode.gxtforms.client.FieldConfigurationException;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
+import com.googlecode.gxtforms.client.config.Orientation;
 
 public class FormImpl implements Form {
 
@@ -32,10 +35,10 @@ public class FormImpl implements Form {
 
         Collections.sort(fields, new Comparator<FieldConfiguration>() {
             public int compare(FieldConfiguration field1, FieldConfiguration field2) {
-                if (field1.getOrder() == field2.getOrder()) {
+                if (field1.getIndex() == field2.getIndex()) {
                     return -1;
                 } else {
-                    return field1.getOrder() - field2.getOrder();
+                    return field1.getIndex() - field2.getIndex();
                 }
             }
         });
@@ -48,8 +51,8 @@ public class FormImpl implements Form {
             fieldConfiguration.setName(field.getName());
         }
 
-        if (StringUtils.isEmpty(fieldConfiguration.getLabel())) {
-            fieldConfiguration.setLabel(WordUtils.capitalize(fieldConfiguration.getName()));
+        if (StringUtils.isEmpty(fieldConfiguration.getFieldLabel())) {
+            fieldConfiguration.setFieldLabel(WordUtils.capitalize(fieldConfiguration.getName()));
         }
     }
 
@@ -57,11 +60,31 @@ public class FormImpl implements Form {
     public FieldConfiguration buildFieldConfiguration(Field field, Annotation formField) {
         FieldConfiguration config = new FieldConfiguration();
         config.setName((String) invoke("name", formField));
-        config.setType((FieldType) invoke("fieldType", formField));
+        config.setFieldType((FieldType) invoke("fieldType", formField));
         if (! (formField instanceof HiddenField)) {
-            config.setLabel((String) invoke("label", formField));
+            
+            if (! (formField instanceof CheckBoxField) && !(formField instanceof RadioField)) {
+                config.setEmptyText((String) invoke("emptyText", formField));
+            }
+            
+            if (formField instanceof RadioField) {
+                config.setOrientation((Orientation) invoke("orientation", formField));
+            }
+            
+            
+            config.setFieldLabel((String) invoke("fieldLabel", formField));
+            config.setHideLabel((Boolean) invoke("hideLabel", formField));
+            config.setReadOnly((Boolean) invoke("readOnly", formField));
+            config.setAllowBlank((Boolean) invoke("allowBlank", formField));
+            config.setLabelSeparator((String) invoke("labelSeparator", formField));
+            config.setLabelStyle((String) invoke("labelStyle", formField));
+            config.setMaxLength((Integer) invoke("maxLength", formField));
+            config.setMessageTarget((String) invoke("messageTarget", formField));
+            config.setValidateOnBlur((Boolean) invoke("validateOnBlur", formField));
+            config.setValidationDelay((Integer) invoke("validationDelay", formField));
+            config.setAutoValidate((Boolean) invoke("autoValidate", formField));
         }
-        config.setOrder((Integer) invoke("order", formField));
+        config.setIndex((Integer) invoke("index", formField));
         if (Enum.class.isAssignableFrom(field.getType())) {
             List<EnumFieldOption> options = new ArrayList<EnumFieldOption>();
             for (Enum e : ((Class<Enum>) field.getType()).getEnumConstants()) {

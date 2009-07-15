@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.googlecode.gxtforms.annotations.CharField;
 import com.googlecode.gxtforms.annotations.ChooseOneField;
+import com.googlecode.gxtforms.annotations.RadioField;
 import com.googlecode.gxtforms.client.FieldConfigurationException;
 import com.googlecode.gxtforms.client.FieldOption;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
@@ -21,12 +22,12 @@ public class SimpleFormImplTest {
         List<FieldConfiguration> fields = new SimpleFormDemo().getFields();
         assertEquals(2, fields.size());
         assertEquals("name", fields.get(0).getName());
-        assertEquals("Name", fields.get(0).getLabel());
-        assertEquals(FieldType.Text, fields.get(0).getType());
+        assertEquals("Name", fields.get(0).getFieldLabel());
+        assertEquals(FieldType.Text, fields.get(0).getFieldType());
 
         assertEquals("age", fields.get(1).getName());
-        assertEquals("Age", fields.get(1).getLabel());
-        assertEquals(FieldType.SelectOne, fields.get(1).getType());
+        assertEquals("Age", fields.get(1).getFieldLabel());
+        assertEquals(FieldType.SelectOne, fields.get(1).getFieldType());
     }
 
     @Test
@@ -34,11 +35,11 @@ public class SimpleFormImplTest {
         List<FieldConfiguration> fields = new CustomFormDemo().getFields();
         assertEquals(2, fields.size());
         assertEquals("username", fields.get(0).getName());
-        assertEquals("Login", fields.get(0).getLabel());
-        assertEquals(FieldType.Text, fields.get(0).getType());
+        assertEquals("Login", fields.get(0).getFieldLabel());
+        assertEquals(FieldType.Text, fields.get(0).getFieldType());
         assertEquals("yearsOfAge", fields.get(1).getName());
-        assertEquals("Years of Age", fields.get(1).getLabel());
-        assertEquals(FieldType.SelectOne, fields.get(1).getType());
+        assertEquals("Years of Age", fields.get(1).getFieldLabel());
+        assertEquals(FieldType.SelectOne, fields.get(1).getFieldType());
     }
 
     @Test
@@ -53,15 +54,17 @@ public class SimpleFormImplTest {
 
     @Test()
     public void testEnumField() {
-        FieldConfiguration fieldConfig = new EnumForm().getFields().get(0);
-        List<? extends FieldOption<?>> options = fieldConfig.getOptions();
-        assertEquals(4, options.size());
         
-        EnumExample[] enums = EnumSet.allOf(EnumExample.class).toArray(new EnumExample[0]);
-        
-        for (int i = 0; i < options.size(); i++) {
-            assertEquals(enums[i], options.get(i).getValue());
-            assertEquals(enums[i].name(), options.get(i).getLabel());
+        for (FieldConfiguration fieldConfig : new EnumForm().getFields()) {
+            List<? extends FieldOption<?>> options = fieldConfig.getOptions();
+            assertEquals(4, options.size());
+            
+            EnumExample[] enums = EnumSet.allOf(EnumExample.class).toArray(new EnumExample[0]);
+            
+            for (int i = 0; i < options.size(); i++) {
+                assertEquals(enums[i], options.get(i).getValue());
+                assertEquals(enums[i].name(), options.get(i).getLabel());
+            }
         }
         
     }
@@ -71,10 +74,10 @@ public class SimpleFormImplTest {
 @SuppressWarnings("unused")
 class SimpleFormDemo extends FormImpl {
 
-    @CharField(order = 1)
+    @CharField(index = 1)
     private String name;
 
-    @ChooseOneField(order = 2)
+    @ChooseOneField(index = 2)
     private int age;
 
 }
@@ -82,10 +85,10 @@ class SimpleFormDemo extends FormImpl {
 @SuppressWarnings("unused")
 class CustomFormDemo extends FormImpl {
 
-    @CharField(label = "Login", name = "username", order = 1)
+    @CharField(fieldLabel = "Login", name = "username", index = 1)
     private String name;
 
-    @ChooseOneField(label = "Years of Age", name = "yearsOfAge", order = 2)
+    @ChooseOneField(fieldLabel = "Years of Age", name = "yearsOfAge", index = 2)
     private int age;
 
 }
@@ -115,7 +118,10 @@ class InvalidForm extends FormImpl {
 @SuppressWarnings("unused")
 class EnumForm extends FormImpl {
 
-    @ChooseOneField
+    @ChooseOneField(index = 1)
     private EnumExample test;
+    
+    @RadioField(index = 2)
+    private EnumExample test2;
 
 }

@@ -85,7 +85,7 @@ public class AppView extends View {
 
   private void createNorth() {
     StringBuffer sb = new StringBuffer();
-    sb.append("<div id='demo-theme'></div><div id=demo-title>Ext GWT Explorer Demo</div>");
+    sb.append("<div id='demo-theme'></div><div id=demo-title>GXTForms Demo</div>");
 
     northPanel = new HtmlContainer(sb.toString());
     northPanel.setStateful(false);

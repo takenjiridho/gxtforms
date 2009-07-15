@@ -45,30 +45,34 @@ public class FormsExample extends LayoutContainer {
 
 package com.googlecode.gxtforms.demo.client;
 
-import java.io.Serializable;
-
+import com.extjs.gxt.ui.client.data.BeanModel;
 import com.googlecode.gxtforms.annotations.CharField;
 import com.googlecode.gxtforms.annotations.ChooseOneField;
 import com.googlecode.gxtforms.annotations.DateField;
 import com.googlecode.gxtforms.annotations.HiddenField;
+import com.googlecode.gxtforms.annotations.RadioField;
 import com.googlecode.gxtforms.annotations.TextAreaField;
+import com.googlecode.gxtforms.client.config.Orientation;
 
 @SuppressWarnings("serial")
-public class SimpleForm implements Serializable {
+public class SimpleForm extends BeanModel {
 
     @HiddenField
     private Integer id;
 
-    @CharField(order = 1, required = true)
+    @CharField(index = 1, allowBlank = false, maxLength = 20, autoValidate = false, validateOnBlur = true)
     private String name;
 
-    @ChooseOneField(order = 2)
+    @ChooseOneField(index = 2)
     private CarManufacturer car;
 
-    @TextAreaField(order = 3)
+    @RadioField(index = 3, allowBlank = false, orientation = Orientation.Vertical)
+    private CarManufacturer car2;
+
+    @TextAreaField(index = 4, maxLength = 255)
     private String description;
 
-    @DateField(order = 4)
+    @DateField(index = 5)
     private String createdAt;
 
     public SimpleForm() {
@@ -113,6 +117,14 @@ public class SimpleForm implements Serializable {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public CarManufacturer getCar2() {
+        return car2;
+    }
+
+    public void setCar2(CarManufacturer car2) {
+        this.car2 = car2;
     }
 
 }
