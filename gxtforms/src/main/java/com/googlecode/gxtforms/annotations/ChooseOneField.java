@@ -14,22 +14,22 @@ import com.googlecode.gxtforms.client.config.NullEnum;
 @Retention(RetentionPolicy.RUNTIME)
 @FormField()
 public @interface ChooseOneField {
-    
+
     /**
      * FieldType that will be rendered.
      */
     FieldType fieldType() default FieldType.SelectOne;
-    
+
     /**
      * Displayed to users.
      */
-    String label() default "";
+    String fieldLabel() default "";
 
     /**
      * The fields order with respect to other fields.
      */
-    int order() default 0;
-    
+    int index() default 0;
+
     /**
      * Underlying form field name.
      */
@@ -38,16 +38,29 @@ public @interface ChooseOneField {
     /**
      * Whether or not a field is required.
      */
-    boolean required() default false;
-    
+    boolean allowBlank() default true;
+
     /**
      * Value displayed to a user when there is no value in a field.
      */
     String emptyText() default "";
+
+    boolean autoValidate() default true;
+
+    String labelSeparator() default ":";
+
+    String labelStyle() default "";
+
+    String messageTarget() default "";
+
+    boolean validateOnBlur() default false;
+
+    int validationDelay() default 200;
+
+    boolean hideLabel() default false;
+
+    boolean readOnly() default false;
     
-    /**
-     * Enumeration to be used as values in choose one. 
-     */
-    Class<? extends Enum<?>> enumClass() default NullEnum.class;
+    int maxLength() default 0;
 
 }

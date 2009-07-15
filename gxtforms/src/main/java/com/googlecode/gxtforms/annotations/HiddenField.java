@@ -24,6 +24,6 @@ public @interface HiddenField {
      */
     String name() default "";
     
-    int order() default 0;
+    int index() default 0;
     
 }

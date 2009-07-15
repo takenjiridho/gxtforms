@@ -22,7 +22,7 @@ public @interface CheckBoxField {
     /**
      * Displayed to users.
      */
-    String label() default "";
+    String fieldLabel() default "";
 
     /**
      * Underlying form field name.
@@ -32,11 +32,28 @@ public @interface CheckBoxField {
     /**
      * The fields order with respect to other fields.
      */
-    int order() default 0;
+    int index() default 0;
 
     /**
      * Whether or not a field is required.
      */
-    boolean required() default false;
+    boolean allowBlank() default true;
 
+    boolean autoValidate() default true;
+
+    String labelSeparator() default ":";
+
+    String labelStyle() default "";
+
+    String messageTarget() default "";
+
+    boolean validateOnBlur() default false;
+
+    int validationDelay() default 200;
+
+    boolean hideLabel() default false;
+
+    boolean readOnly() default false;
+
+    int maxLength() default 0;
 }

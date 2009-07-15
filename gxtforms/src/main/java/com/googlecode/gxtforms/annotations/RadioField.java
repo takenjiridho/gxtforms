@@ -7,6 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.googlecode.gxtforms.client.config.FieldType;
+import com.googlecode.gxtforms.client.config.Orientation;
 
 @Inherited
 @Target(ElementType.FIELD)
@@ -22,7 +23,7 @@ public @interface RadioField {
     /**
      * Displayed to users.
      */
-    String label() default "";
+    String fieldLabel() default "";
 
     /**
      * Underlying form field name.
@@ -32,16 +33,41 @@ public @interface RadioField {
     /**
      * The fields order with respect to other fields.
      */
-    int order() default 0;
+    int index() default 0;
 
     /**
      * Whether or not a field is required.
      */
-    boolean required() default false;
+    boolean allowBlank() default true;
+    
+    /** 
+     * Render the options Horizontal or Vertical
+     */
+    Orientation orientation() default Orientation.Horizontal;
 
     /**
      * String identifying a group to place a radio button in.
+     * 
+     * If no radioGroup is defined, the name() is used.
      */
-    String radioGroup();
+    String radioGroup() default "";
 
+    boolean autoValidate() default true;
+    
+    String labelSeparator() default ":"; 
+
+    String labelStyle() default "";
+    
+    String messageTarget() default "";
+    
+    boolean validateOnBlur() default false;
+    
+    int validationDelay() default 200;
+    
+    boolean hideLabel() default false;
+    
+    boolean readOnly() default false;
+    
+    int maxLength() default 0;
+    
 }
