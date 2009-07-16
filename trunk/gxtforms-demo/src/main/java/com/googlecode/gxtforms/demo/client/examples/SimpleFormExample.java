@@ -9,13 +9,12 @@ import com.googlecode.gxtforms.client.FormService;
 import com.googlecode.gxtforms.client.FormServiceAsync;
 import com.googlecode.gxtforms.client.GXTFormBuilder;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
-import com.googlecode.gxtforms.demo.client.SimpleForm;
 
-public class FormsExample extends LayoutContainer {
+public class SimpleFormExample extends LayoutContainer {
 
     private VerticalPanel vp;
 
-    public FormsExample() {
+    public SimpleFormExample() {
         vp = new VerticalPanel();
         vp.setSpacing(10);
 
@@ -25,6 +24,7 @@ public class FormsExample extends LayoutContainer {
     protected void onRender(Element parent, int index) {
         super.onRender(parent, index);
         add(vp);
+        
         FormServiceAsync service = GWT.create(FormService.class);
         service.getFormConfiguration(SimpleForm.class.getName(), new AsyncCallback<FormConfiguration>() {
             public void onSuccess(FormConfiguration result) {

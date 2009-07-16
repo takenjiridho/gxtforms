@@ -64,12 +64,12 @@ public class Entry extends BaseTreeModel {
     return (String) get("name");
   }
 
-  public String getSourceUrl() {
+  public String getExampleUrl() {
     Object o = (Object) get("example");
     String name = o.getClass().getName();
 
     name = name.substring(name.lastIndexOf("examples.") + 9);
-    name = "code/" + name + ".txt";
+    name = "code/" + name + ".java";
 //    name = name.replaceFirst("\\.", "/");
 
     if (!Application.isExplorer()) {
@@ -78,6 +78,11 @@ public class Entry extends BaseTreeModel {
 
     return name;
   }
+  
+  public String getBeanUrl() {
+      return getExampleUrl().replace("Example", "");
+  }
+  
 
   public boolean isClosable() {
     return closable;

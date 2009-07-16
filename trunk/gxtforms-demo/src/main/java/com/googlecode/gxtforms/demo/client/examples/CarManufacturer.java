@@ -1,4 +1,4 @@
-package com.googlecode.gxtforms.demo.client;
+package com.googlecode.gxtforms.demo.client.examples;
 
 public enum CarManufacturer {
 

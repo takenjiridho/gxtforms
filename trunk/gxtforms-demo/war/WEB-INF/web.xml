@@ -11,5 +11,15 @@
         <servlet-name>FormService</servlet-name>
         <url-pattern>/com.googlecode.gxtforms.demo.Application/FormService</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Code</servlet-name>
+        <servlet-class>com.googlecode.gxtforms.demo.server.CodeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Code</servlet-name>
+        <url-pattern>/code/*</url-pattern>
+    </servlet-mapping>
+    
 
 </web-app>

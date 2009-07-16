@@ -57,9 +57,13 @@ public class Page extends TabPanel {
     
     if (entry.isClosable()) {
       TabItem source = new TabItem();
-      source.setText("Source");
-      source.setUrl(entry.getSourceUrl());
+      source.setText("Client Code Source");
+      source.setUrl(entry.getExampleUrl());
       add(source);
+      TabItem bean = new TabItem();
+      bean.setText("Annotations Source");
+      bean.setUrl(entry.getBeanUrl());
+      add(bean);
     }
   }
 

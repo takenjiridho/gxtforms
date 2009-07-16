@@ -1,4 +1,4 @@
-package com.googlecode.gxtforms.demo.client;
+package com.googlecode.gxtforms.demo.client.examples;
 
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.googlecode.gxtforms.annotations.CharField;
