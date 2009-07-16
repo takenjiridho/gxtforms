@@ -8,6 +8,6 @@ public interface ExampleImages extends ImageBundle {
 
     public static ExampleImages BUNDLE = GWT.create(ExampleImages.class);
     
-    AbstractImagePrototype forms();
+    AbstractImagePrototype simpleForm();
     
 }
