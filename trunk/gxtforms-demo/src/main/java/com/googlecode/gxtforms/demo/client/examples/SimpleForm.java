@@ -4,8 +4,10 @@ import com.extjs.gxt.ui.client.data.BeanModel;
 import com.googlecode.gxtforms.annotations.CharField;
 import com.googlecode.gxtforms.annotations.ChooseOneField;
 import com.googlecode.gxtforms.annotations.DateField;
+import com.googlecode.gxtforms.annotations.EmailField;
 import com.googlecode.gxtforms.annotations.Form;
 import com.googlecode.gxtforms.annotations.HiddenField;
+import com.googlecode.gxtforms.annotations.PhoneField;
 import com.googlecode.gxtforms.annotations.RadioField;
 import com.googlecode.gxtforms.annotations.TextAreaField;
 import com.googlecode.gxtforms.client.config.Orientation;
@@ -31,6 +33,12 @@ public class SimpleForm extends BeanModel {
 
     @DateField(index = 5)
     private String createdAt;
+
+    @EmailField(index = 6)
+    private String email;
+
+    @PhoneField(index = 7)
+    private String phone;
 
     public SimpleForm() {
         super();
@@ -82,6 +90,22 @@ public class SimpleForm extends BeanModel {
 
     public void setCar2(CarManufacturer car2) {
         this.car2 = car2;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
 }

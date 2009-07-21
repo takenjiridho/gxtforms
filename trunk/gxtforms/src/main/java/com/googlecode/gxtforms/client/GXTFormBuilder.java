@@ -17,12 +17,14 @@ import com.extjs.gxt.ui.client.widget.form.Radio;
 import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.form.TextField;
+import com.extjs.gxt.ui.client.widget.form.Validator;
 import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
 import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
+import com.googlecode.gxtforms.client.config.RegexWithMessage;
 import com.googlecode.gxtforms.client.utils.CollectionUtils;
 import com.googlecode.gxtforms.client.utils.StringUtils;
 
@@ -73,12 +75,11 @@ public class GXTFormBuilder {
         if (fieldWidth > 0) {
             panel.setFieldWidth(fieldWidth);
         }
-        
+
         int width = config.getWidth();
         if (width > 0) {
             panel.setWidth(width);
         }
-        
 
         String method = config.getMethod();
         if (StringUtils.isNotEmpty(method)) {
@@ -109,6 +110,18 @@ public class GXTFormBuilder {
                 int maxLength = fieldConfig.getMaxLength();
                 if (maxLength > 0) {
                     textField.setMaxLength(maxLength);
+                }
+                final RegexWithMessage validator = fieldConfig.getValidator();
+                if (validator != null && StringUtils.isNotEmpty(validator.getRegex())) {
+                    textField.setValidator(new Validator() {
+                        public String validate(Field<?> field, String value) {
+                            if (!value.matches(validator.getRegex())) {
+                                return validator.getMessage();
+                            } else {
+                                return null;
+                            }
+                        }
+                    });
                 }
             }
 

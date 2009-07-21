@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 
 import com.googlecode.gxtforms.client.config.FieldType;
 import com.googlecode.gxtforms.client.config.Orientation;
+import com.googlecode.gxtforms.validators.NoopValidator;
+import com.googlecode.gxtforms.validators.Validator;
 
 @Inherited
 @Target(ElementType.FIELD)
@@ -69,5 +71,7 @@ public @interface RadioField {
     boolean readOnly() default false;
     
     int maxLength() default 0;
+    
+    Class<? extends Validator<?>> validator() default NoopValidator.class;    
     
 }
