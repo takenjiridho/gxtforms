@@ -4,12 +4,14 @@ import com.extjs.gxt.ui.client.data.BeanModel;
 import com.googlecode.gxtforms.annotations.CharField;
 import com.googlecode.gxtforms.annotations.ChooseOneField;
 import com.googlecode.gxtforms.annotations.DateField;
+import com.googlecode.gxtforms.annotations.Form;
 import com.googlecode.gxtforms.annotations.HiddenField;
 import com.googlecode.gxtforms.annotations.RadioField;
 import com.googlecode.gxtforms.annotations.TextAreaField;
 import com.googlecode.gxtforms.client.config.Orientation;
 
 @SuppressWarnings("serial")
+@Form(heading = "Simple Form", labelWidth = 100, fieldWidth = 150, width = 500)
 public class SimpleForm extends BeanModel {
 
     @HiddenField
@@ -21,7 +23,7 @@ public class SimpleForm extends BeanModel {
     @ChooseOneField(index = 2)
     private CarManufacturer car;
 
-    @RadioField(index = 3, allowBlank = false, orientation = Orientation.Vertical)
+    @RadioField(index = 3, allowBlank = false, orientation = Orientation.VERTICAL)
     private CarManufacturer car2;
 
     @TextAreaField(index = 4, maxLength = 255)

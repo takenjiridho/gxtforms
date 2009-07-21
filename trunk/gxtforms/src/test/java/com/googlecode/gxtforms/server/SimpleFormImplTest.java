@@ -72,7 +72,7 @@ public class SimpleFormImplTest {
 }
 
 @SuppressWarnings("unused")
-class SimpleFormDemo extends FormImpl {
+class SimpleFormDemo extends FormBeanImpl {
 
     @CharField(index = 1)
     private String name;
@@ -83,7 +83,7 @@ class SimpleFormDemo extends FormImpl {
 }
 
 @SuppressWarnings("unused")
-class CustomFormDemo extends FormImpl {
+class CustomFormDemo extends FormBeanImpl {
 
     @CharField(fieldLabel = "Login", name = "username", index = 1)
     private String name;
@@ -94,7 +94,7 @@ class CustomFormDemo extends FormImpl {
 }
 
 @SuppressWarnings("unused")
-class NoOrderForm extends FormImpl {
+class NoOrderForm extends FormBeanImpl {
 
     @CharField
     private String a;
@@ -108,7 +108,7 @@ class NoOrderForm extends FormImpl {
 }
 
 @SuppressWarnings("unused")
-class InvalidForm extends FormImpl {
+class InvalidForm extends FormBeanImpl {
 
     @CharField
     @ChooseOneField
@@ -116,7 +116,7 @@ class InvalidForm extends FormImpl {
 }
 
 @SuppressWarnings("unused")
-class EnumForm extends FormImpl {
+class EnumForm extends FormBeanImpl {
 
     @ChooseOneField(index = 1)
     private EnumExample test;

@@ -32,7 +32,7 @@ public class AllFieldAttributesTest {
 
 }
 
-class FormA extends FormImpl {
+class FormA extends FormBeanImpl {
 
     @SuppressWarnings("unused")
     @CharField(autoValidate = true, emptyText = "empty", fieldLabel = "label", index = 3, hideLabel = true, fieldType = FieldType.TextArea, 

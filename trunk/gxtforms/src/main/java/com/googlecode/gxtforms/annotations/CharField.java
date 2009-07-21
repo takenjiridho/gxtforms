@@ -11,7 +11,7 @@ import com.googlecode.gxtforms.client.config.FieldType;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@FormField()
+@FormAnnotation()
 public @interface CharField {
 
     /**

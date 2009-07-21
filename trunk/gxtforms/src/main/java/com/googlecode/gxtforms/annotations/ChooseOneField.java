@@ -12,7 +12,7 @@ import com.googlecode.gxtforms.client.config.NullEnum;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@FormField()
+@FormAnnotation()
 public @interface ChooseOneField {
 
     /**
