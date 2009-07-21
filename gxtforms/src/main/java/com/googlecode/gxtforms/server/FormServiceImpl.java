@@ -1,6 +1,7 @@
 package com.googlecode.gxtforms.server;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -20,11 +21,14 @@ public class FormServiceImpl extends RemoteServiceServlet implements FormService
             config = new FormConfiguration();
             try {
                 Class<?> target = Class.forName(className);
-                if (Form.class.isAssignableFrom(target)) {
-                    config.setFieldConfigurations(((Form) target.newInstance()).getFields());
+                FormBean formBean;
+                if (FormBean.class.isAssignableFrom(target)) {
+                    formBean = (FormBean) target.newInstance();
                 } else {
-                    config.setFieldConfigurations(new FormImplAdapater(target).getFields());
+                    formBean = new FormBeanImplAdapater(target);
                 }
+                config.setFieldConfigurations(formBean.getFields());
+                config.setFormPanelConfiguration(formBean.getFormConfiguration());
                 
                 cache.put(className, config);
             } catch (Exception e) {

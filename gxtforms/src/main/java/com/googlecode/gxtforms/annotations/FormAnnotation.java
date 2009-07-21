@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.ANNOTATION_TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FormField {
+public @interface FormAnnotation {
 
 }

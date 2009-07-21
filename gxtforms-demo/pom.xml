@@ -47,6 +47,14 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>com.extjs.gxt.ui</groupId>
+            <artifactId>gxt</artifactId>
+            <version>2.0</version>
+            <optional>true</optional>
+        </dependency>
+        
     </dependencies>
 
 

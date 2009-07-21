@@ -13,16 +13,18 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
 import com.googlecode.gxtforms.annotations.CheckBoxField;
-import com.googlecode.gxtforms.annotations.FormField;
+import com.googlecode.gxtforms.annotations.Form;
+import com.googlecode.gxtforms.annotations.FormAnnotation;
 import com.googlecode.gxtforms.annotations.HiddenField;
 import com.googlecode.gxtforms.annotations.RadioField;
 import com.googlecode.gxtforms.client.EnumFieldOption;
 import com.googlecode.gxtforms.client.FieldConfigurationException;
+import com.googlecode.gxtforms.client.FormPanelConfiguration;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 import com.googlecode.gxtforms.client.config.Orientation;
 
-public class FormImpl implements Form {
+public class FormBeanImpl implements FormBean {
 
     public List<FieldConfiguration> getFields() {
         List<FieldConfiguration> fields = new ArrayList<FieldConfiguration>();
@@ -46,6 +48,47 @@ public class FormImpl implements Form {
         return fields;
     }
 
+    public FormPanelConfiguration getFormConfiguration() {
+        FormPanelConfiguration config = new FormPanelConfiguration();
+        Form annotation = getFormAnnotation();
+        config.setAnimCollapse(annotation.animCollapse());
+        config.setCollapsible(annotation.collapsible());
+        config.setFrame(annotation.frame());
+        config.setHideLabels(annotation.hideLabels());
+        config.setLabelAlign(annotation.labelAlign());
+        
+        String action = annotation.action();
+        if (StringUtils.isNotEmpty(action)) {
+            config.setAction(action);    
+        }
+        
+        config.setLabelWidth(annotation.labelWidth());    
+        config.setFieldWidth(annotation.fieldWidth());
+        config.setWidth(annotation.width());    
+        
+        String method = annotation.method();
+        if (StringUtils.isNotEmpty(method)) {
+            config.setMethod(method);    
+        }
+        
+        String title = annotation.heading();
+        if (StringUtils.isNotEmpty(title)) {
+            config.setHeading(title);    
+        }
+        
+        return config;
+    }
+    
+    public Form getFormAnnotation() {
+        for (Annotation annotation : getClass().getAnnotations()) {
+            if (annotation instanceof Form) {
+                return (Form) annotation;
+            }
+        }
+        throw new RuntimeException("no FormAnnotation defined for: " + getClass().getName());
+    }
+    
+
     public void cleanDefaults(FieldConfiguration fieldConfiguration, Field field) {
         if (StringUtils.isEmpty(fieldConfiguration.getName())) {
             fieldConfiguration.setName(field.getName());
@@ -61,17 +104,16 @@ public class FormImpl implements Form {
         FieldConfiguration config = new FieldConfiguration();
         config.setName((String) invoke("name", formField));
         config.setFieldType((FieldType) invoke("fieldType", formField));
-        if (! (formField instanceof HiddenField)) {
-            
-            if (! (formField instanceof CheckBoxField) && !(formField instanceof RadioField)) {
+        if (!(formField instanceof HiddenField)) {
+
+            if (!(formField instanceof CheckBoxField) && !(formField instanceof RadioField)) {
                 config.setEmptyText((String) invoke("emptyText", formField));
             }
-            
+
             if (formField instanceof RadioField) {
                 config.setOrientation((Orientation) invoke("orientation", formField));
             }
-            
-            
+
             config.setFieldLabel((String) invoke("fieldLabel", formField));
             config.setHideLabel((Boolean) invoke("hideLabel", formField));
             config.setReadOnly((Boolean) invoke("readOnly", formField));
@@ -123,7 +165,7 @@ public class FormImpl implements Form {
     public List<Annotation> getFormFields(Field field, Annotation[] annots) {
         List<Annotation> annotations = new ArrayList<Annotation>();
         for (Annotation annot : annots) {
-            if (annot.annotationType().getAnnotation(FormField.class) != null) {
+            if (annot.annotationType().getAnnotation(FormAnnotation.class) != null) {
                 annotations.add(annot);
             }
         }

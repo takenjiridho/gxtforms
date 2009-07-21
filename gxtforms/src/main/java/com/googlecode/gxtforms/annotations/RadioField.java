@@ -12,7 +12,7 @@ import com.googlecode.gxtforms.client.config.Orientation;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@FormField()
+@FormAnnotation()
 public @interface RadioField {
 
     /**
@@ -43,7 +43,7 @@ public @interface RadioField {
     /** 
      * Render the options Horizontal or Vertical
      */
-    Orientation orientation() default Orientation.Horizontal;
+    Orientation orientation() default Orientation.HORIZONTAL;
 
     /**
      * String identifying a group to place a radio button in.
