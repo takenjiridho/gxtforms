@@ -23,6 +23,9 @@ import com.googlecode.gxtforms.client.FormPanelConfiguration;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 import com.googlecode.gxtforms.client.config.Orientation;
+import com.googlecode.gxtforms.client.config.RegexWithMessage;
+import com.googlecode.gxtforms.validators.RegExValidator;
+import com.googlecode.gxtforms.validators.Validator;
 
 public class FormBeanImpl implements FormBean {
 
@@ -31,7 +34,6 @@ public class FormBeanImpl implements FormBean {
 
         for (Map.Entry<Field, Annotation> fieldEntry : getFieldAnnotations().entrySet()) {
             FieldConfiguration fieldConfig = buildFieldConfiguration(fieldEntry.getKey(), fieldEntry.getValue());
-            cleanDefaults(fieldConfig, fieldEntry.getKey());
             fields.add(fieldConfig);
         }
 
@@ -88,21 +90,15 @@ public class FormBeanImpl implements FormBean {
         throw new RuntimeException("no FormAnnotation defined for: " + getClass().getName());
     }
     
-
-    public void cleanDefaults(FieldConfiguration fieldConfiguration, Field field) {
-        if (StringUtils.isEmpty(fieldConfiguration.getName())) {
-            fieldConfiguration.setName(field.getName());
-        }
-
-        if (StringUtils.isEmpty(fieldConfiguration.getFieldLabel())) {
-            fieldConfiguration.setFieldLabel(WordUtils.capitalize(fieldConfiguration.getName()));
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public FieldConfiguration buildFieldConfiguration(Field field, Annotation formField) {
         FieldConfiguration config = new FieldConfiguration();
         config.setName((String) invoke("name", formField));
+        if (StringUtils.isEmpty(config.getName())) {
+            config.setName(field.getName());
+        }
+        
+        
         config.setFieldType((FieldType) invoke("fieldType", formField));
         if (!(formField instanceof HiddenField)) {
 
@@ -115,6 +111,10 @@ public class FormBeanImpl implements FormBean {
             }
 
             config.setFieldLabel((String) invoke("fieldLabel", formField));
+            if (StringUtils.isEmpty(config.getFieldLabel())) {
+                config.setFieldLabel(WordUtils.capitalize(config.getName()));
+            }
+            
             config.setHideLabel((Boolean) invoke("hideLabel", formField));
             config.setReadOnly((Boolean) invoke("readOnly", formField));
             config.setAllowBlank((Boolean) invoke("allowBlank", formField));
@@ -125,6 +125,17 @@ public class FormBeanImpl implements FormBean {
             config.setValidateOnBlur((Boolean) invoke("validateOnBlur", formField));
             config.setValidationDelay((Integer) invoke("validationDelay", formField));
             config.setAutoValidate((Boolean) invoke("autoValidate", formField));
+            
+            Class<? extends Validator<?>> validatorClass = (Class<? extends Validator<?>>) invoke("validator", formField);
+            if (RegExValidator.class.isAssignableFrom(validatorClass)) {
+                try {
+                    RegExValidator validator = (RegExValidator) validatorClass.newInstance();
+                    validator.setFieldLabel(config.getFieldLabel());
+                    config.setValidator(new RegexWithMessage(validator.getRegex(), validator.getInvalidMessage()));
+                } catch (Exception e) {
+                    throw new RuntimeException("failed creating validator for: " + config.getName());
+                }
+            }
         }
         config.setIndex((Integer) invoke("index", formField));
         if (Enum.class.isAssignableFrom(field.getType())) {

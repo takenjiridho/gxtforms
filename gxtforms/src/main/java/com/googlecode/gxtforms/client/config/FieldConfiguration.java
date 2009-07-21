@@ -27,6 +27,7 @@ public class FieldConfiguration implements Serializable {
     boolean hideLabel;
     boolean readOnly;
     Orientation orientation;
+    RegexWithMessage validator;
 
     public FieldConfiguration() {
     }
@@ -181,6 +182,14 @@ public class FieldConfiguration implements Serializable {
 
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
+    }
+
+    public RegexWithMessage getValidator() {
+        return validator;
+    }
+
+    public void setValidator(RegexWithMessage validator) {
+        this.validator = validator;
     }
 
 }
