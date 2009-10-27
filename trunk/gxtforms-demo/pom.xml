@@ -8,38 +8,29 @@
     <version>0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <properties>
-        <gwtVersion>1.6.4</gwtVersion>
-    </properties>
-
     <dependencies>
-
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwtVersion}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
-            <version>${gwtVersion}</version>
-            <scope>compile</scope>
+            <version>1.7.0</version>
+            <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>1.7.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.google.appengine</groupId>
-            <artifactId>api-1.0-sdk</artifactId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>1.2.1</version>
         </dependency>
-
         <dependency>
             <groupId>com.googlecode.gxtforms</groupId>
             <artifactId>gxtforms</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-jxr</artifactId>
@@ -47,14 +38,6 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
-        <dependency>
-            <groupId>com.extjs.gxt.ui</groupId>
-            <artifactId>gxt</artifactId>
-            <version>2.0</version>
-            <optional>true</optional>
-        </dependency>
-        
     </dependencies>
 
 
@@ -71,9 +54,8 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>1.1</version>
                 <configuration>
-                    <gwtVersion>${gwtVersion}</gwtVersion>
+                    <gwtVersion>1.7.0</gwtVersion>
                     <module>com.googlecode.gxtforms.demo.Application</module>
                     <runTarget>index.html</runTarget>
                 </configuration>
