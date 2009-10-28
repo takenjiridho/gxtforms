@@ -3,7 +3,11 @@ package com.googlecode.gxtforms.client;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style.Orientation;
+import com.extjs.gxt.ui.client.binding.FormBinding;
 import com.extjs.gxt.ui.client.data.BaseModelData;
+import com.extjs.gxt.ui.client.data.BeanModel;
+import com.extjs.gxt.ui.client.data.BeanModelFactory;
+import com.extjs.gxt.ui.client.data.BeanModelLookup;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.Layout;
@@ -37,12 +41,29 @@ public class GXTFormBuilder {
     }
 
     public FormPanel buildFormPanel(FormConfiguration formConfig, Layout layout) {
-        FormPanel panel = initPanel(formConfig.getFormPanelConfiguration());
+        FormPanel panel = initFormPanel(formConfig.getFormPanelConfiguration());
         panel.setLayout(layout);
         for (FieldConfiguration fieldConfig : formConfig.getFieldConfigurations()) {
             panel.add(buildField(fieldConfig));
         }
         return panel;
+    }
+    
+    public void bind(FormPanel formPanel, Object bean) {
+    	FormBinding binding = new FormBinding(formPanel, true);
+    	if (bean instanceof ModelData) {
+    		binding.bind((ModelData) bean);
+    	} else {
+    		BeanModelFactory factory = BeanModelLookup.get().getFactory(bean.getClass());
+    		BeanModel model = factory.createModel(bean);
+    		binding.bind(model);
+    	}
+    }
+    
+    public FormPanel buildFormPanel(FormConfiguration formConfig, Object bean) {
+    	FormPanel panel = buildFormPanel(formConfig);
+    	bind(panel, bean);
+    	return panel;
     }
 
     public FormPanel buildFormPanel(FormConfiguration formConfig) {
@@ -59,7 +80,7 @@ public class GXTFormBuilder {
         return buildFormPanel(formConfig, layout);
     }
 
-    protected FormPanel initPanel(FormPanelConfiguration config) {
+    protected FormPanel initFormPanel(FormPanelConfiguration config) {
         FormPanel panel = new FormPanel();
         panel.setFrame(config.isFrame());
         panel.setAnimCollapse(config.isAnimCollapse());
@@ -221,7 +242,7 @@ public class GXTFormBuilder {
         case TextArea:
             return new TextArea();
         default:
-            throw new FieldConfigurationException("unmapped field type: " + fieldConfig.getFieldType());
+            throw new FieldConfigurationException("Unmapped field type: " + fieldConfig.getFieldType());
         }
 
     }
