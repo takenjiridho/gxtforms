@@ -29,32 +29,33 @@ public class SimpleFormExample extends LayoutContainer {
     protected void onRender(Element parent, int index) {
         super.onRender(parent, index);
         add(vp);
-        
+
         FormServiceAsync service = GWT.create(FormService.class);
         service.getFormConfiguration(SimpleForm.class.getName(), new AsyncCallback<FormConfiguration>() {
             public void onSuccess(FormConfiguration result) {
-            	addForm(result);
+                addForm(result);
             }
 
             public void onFailure(Throwable caught) {
-            	MessageBox.alert("Error", caught.getMessage(), null);
+                MessageBox.alert("Error", caught.getMessage(), null);
             }
         });
     }
-    
+
     public void addForm(FormConfiguration config) {
-    	final SimpleForm form = new SimpleForm();
+        final SimpleForm form = new SimpleForm();
         FormPanel panel = new GXTFormBuilder().buildFormPanel(config, form);
         Button submit = new Button("Test DataBinding", new SelectionListener<ButtonEvent>() {
-			
-			@Override
-			public void componentSelected(ButtonEvent ce) {
-				MessageBox.alert("Name", form.getName(), null);
-			}
-		});
-		panel.addButton(submit);
-		vp.add(panel);
-		vp.layout();
+
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                MessageBox.alert("DataBinding", form.getName() + ":" + form.getCar() + ":" + form.getCar2() + ":" + form.getDescription()
+                        + ":" + form.getCreatedAt() + ":" + form.getEmail() + ":" + form.getPhone(), null);
+            }
+        });
+        panel.addButton(submit);
+        vp.add(panel);
+        vp.layout();
     }
 
 }

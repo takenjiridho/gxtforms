@@ -2,6 +2,7 @@ package com.googlecode.gxtforms.validators;
 
 public abstract class ValidatorBase<T> implements Validator<T> {
 
+    /* currently fieldLabel is unused */
     protected String fieldLabel;
 
     public ValidatorBase() {
@@ -20,7 +21,7 @@ public abstract class ValidatorBase<T> implements Validator<T> {
     }
 
     public String getInvalidMessage() {
-        return fieldLabel + " is invalid.";
+        return "This field is invalid.";
     }
 
 }
