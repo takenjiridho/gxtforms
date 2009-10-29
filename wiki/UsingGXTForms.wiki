@@ -1,0 +1,22 @@
+#summary Here's some info about using the library.
+
+You might want to have a look at the source code for the demo here:
+
+   http://code.google.com/p/gxtforms/source/browse/trunk/gxtforms-demo/
+
+The demo application has client source and annotations tabs at the bottom for an example:
+
+   http://gxtforms.appspot.com/
+
+The only thing that the demo doesn't really illustrate is the web.xml entries needed.  Here's what the demo app's FormService declaration looks like:
+
+{{{
+    <servlet>
+        <servlet-name>FormService</servlet-name>
+        <servlet-class>com.googlecode.gxtforms.server.FormServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FormService</servlet-name>
+        <url-pattern>/com.googlecode.gxtforms.demo.Application/FormService</url-pattern>
+    </servlet-mapping>
+}}}
