@@ -3,7 +3,7 @@ import java.util.regex.Pattern;
 
 public class RegExValidator extends ValidatorBase<String> {
 
-    private final static String message = " is not a valid ";
+    private final static String message = "This field is not a valid ";
 
     protected Pattern pattern;
     protected String regex;
@@ -44,7 +44,7 @@ public class RegExValidator extends ValidatorBase<String> {
 
     @Override
     public String getInvalidMessage() {
-        return fieldLabel + message + typeLabel + ".";
+        return message + typeLabel + ".";
     }
     
     

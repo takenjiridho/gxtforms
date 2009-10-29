@@ -1,6 +1,9 @@
 package com.googlecode.gxtforms.demo.client.examples;
 
-import com.extjs.gxt.ui.client.data.BeanModel;
+import java.io.Serializable;
+import java.util.Date;
+
+import com.extjs.gxt.ui.client.data.BeanModelTag;
 import com.googlecode.gxtforms.annotations.CharField;
 import com.googlecode.gxtforms.annotations.ChooseOneField;
 import com.googlecode.gxtforms.annotations.DateField;
@@ -14,7 +17,7 @@ import com.googlecode.gxtforms.client.config.Orientation;
 
 @SuppressWarnings("serial")
 @Form(heading = "Simple Form", labelWidth = 100, fieldWidth = 150, width = 500)
-public class SimpleForm extends BeanModel {
+public class SimpleForm implements BeanModelTag, Serializable {
 
     @HiddenField
     private Integer id;
@@ -32,7 +35,7 @@ public class SimpleForm extends BeanModel {
     private String description;
 
     @DateField(index = 5)
-    private String createdAt;
+    private Date createdAt;
 
     @EmailField(index = 6)
     private String email;
@@ -76,11 +79,11 @@ public class SimpleForm extends BeanModel {
         this.description = description;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -3,12 +3,16 @@ package com.googlecode.gxtforms.client;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style.Orientation;
+import com.extjs.gxt.ui.client.binding.FieldBinding;
 import com.extjs.gxt.ui.client.binding.FormBinding;
 import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.data.BeanModel;
 import com.extjs.gxt.ui.client.data.BeanModelFactory;
 import com.extjs.gxt.ui.client.data.BeanModelLookup;
 import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.event.BindingEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.Layout;
 import com.extjs.gxt.ui.client.widget.form.CheckBox;
@@ -36,6 +40,8 @@ public class GXTFormBuilder {
 
     public static final int DEFAULT_LABEL_WIDTH = 150;
 
+    protected static final DateConverter dateConverter = new DateConverter();
+    
     public GXTFormBuilder() {
         super();
     }
@@ -48,22 +54,41 @@ public class GXTFormBuilder {
         }
         return panel;
     }
-    
-    public void bind(FormPanel formPanel, Object bean) {
-    	FormBinding binding = new FormBinding(formPanel, true);
-    	if (bean instanceof ModelData) {
-    		binding.bind((ModelData) bean);
-    	} else {
-    		BeanModelFactory factory = BeanModelLookup.get().getFactory(bean.getClass());
-    		BeanModel model = factory.createModel(bean);
-    		binding.bind(model);
-    	}
+
+    public void bind(FormConfiguration formConfig, FormPanel formPanel, Object bean) {
+        final FormBinding binding = new FormBinding(formPanel, true);
+        if (bean instanceof ModelData) {
+            binding.bind((ModelData) bean);
+        } else {
+            BeanModelFactory factory = BeanModelLookup.get().getFactory(bean.getClass());
+            BeanModel model = factory.createModel(bean);
+            binding.bind(model);
+        }
+
+        for (FieldBinding fieldBinding : binding.getBindings()) {
+            Field<Object> field = fieldBinding.getField();
+            FieldConfiguration fieldConfig = formConfig.getFieldConfiguration(field.getName());
+            if (isEnumField(fieldConfig)) {
+                fieldBinding.setConvertor(new EnumConverter(fieldConfig));
+            } //else if (fieldConfig.getFieldType() == FieldType.Date) {
+//                fieldBinding.setConvertor(dateConverter);
+//            }
+        }
+
+        // clear validation errors -- don't want to see those on initial render
+        binding.addListener(Events.Bind, new Listener<BindingEvent>() {
+            public void handleEvent(BindingEvent be) {
+                for (FieldBinding fieldBinding : binding.getBindings()) {
+                    fieldBinding.getField().clearInvalid();
+                }
+            }
+        });
     }
-    
+
     public FormPanel buildFormPanel(FormConfiguration formConfig, Object bean) {
-    	FormPanel panel = buildFormPanel(formConfig);
-    	bind(panel, bean);
-    	return panel;
+        FormPanel panel = buildFormPanel(formConfig);
+        bind(formConfig, panel, bean);
+        return panel;
     }
 
     public FormPanel buildFormPanel(FormConfiguration formConfig) {
@@ -193,13 +218,11 @@ public class GXTFormBuilder {
             return new HiddenField();
         case Radio:
             RadioGroup radio = new RadioGroup();
-            if (CollectionUtils.isNotEmpty(options)) {
-                if (options.get(0) instanceof EnumFieldOption) {
-                    for (EnumFieldOption option : (List<EnumFieldOption>) options) {
-                        Radio radioOption = new Radio();
-                        radioOption.setBoxLabel(option.getLabel());
-                        radio.add(radioOption);
-                    }
+            if (isEnumField(fieldConfig)) {
+                for (EnumFieldOption option : (List<EnumFieldOption>) options) {
+                    Radio radioOption = new Radio();
+                    radioOption.setBoxLabel(option.getLabel());
+                    radio.add(radioOption);
                 }
             }
             return radio;
@@ -221,19 +244,17 @@ public class GXTFormBuilder {
             }
 
             ListStore store = new ListStore();
-            if (CollectionUtils.isNotEmpty(options)) {
-                if (options.get(0) instanceof EnumFieldOption) {
-                    for (EnumFieldOption option : (List<EnumFieldOption>) options) {
-                        ModelData model = new BaseModelData();
-                        model.set("value", option.getValue());
-                        model.set("label", option.getLabel());
-                        store.add(model);
-                    }
-                    box.setDisplayField("label");
-                    box.setValueField("value");
-                    box.setTriggerAction(TriggerAction.ALL);
-                    box.setForceSelection(true);
+            if (isEnumField(fieldConfig)) {
+                for (EnumFieldOption option : (List<EnumFieldOption>) options) {
+                    ModelData model = new BaseModelData();
+                    model.set("value", option.getValue());
+                    model.set("label", option.getLabel());
+                    store.add(model);
                 }
+                box.setDisplayField("label");
+                box.setValueField("value");
+                box.setTriggerAction(TriggerAction.ALL);
+                box.setForceSelection(true);
             }
             box.setStore(store);
             return box;
@@ -247,4 +268,13 @@ public class GXTFormBuilder {
 
     }
 
+    protected boolean isEnumField(FieldConfiguration fieldConfig) {
+        List<? extends FieldOption<?>> options = fieldConfig.getOptions();
+        if ((fieldConfig.getFieldType() == FieldType.SelectOne || fieldConfig.getFieldType() == FieldType.Radio)
+                && CollectionUtils.isNotEmpty(options) && options.get(0) instanceof EnumFieldOption) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -21,6 +21,15 @@ public class FormConfiguration implements Serializable {
     public void setFieldConfigurations(List<FieldConfiguration> fieldConfigurations) {
         this.fieldConfigurations = fieldConfigurations;
     }
+    
+    public FieldConfiguration getFieldConfiguration(String name) {
+        for (FieldConfiguration config : fieldConfigurations) {
+            if (config.getName().equals(name)) {
+                return config;
+            }
+        }
+        return null;
+    }
 
     public FormPanelConfiguration getFormPanelConfiguration() {
         return formPanelConfiguration;
