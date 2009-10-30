@@ -1,5 +1,7 @@
 #summary Here's some info about using the library.
 
+==Usage Notes==
+
 You might want to have a look at the source code for the demo here:
 
    http://code.google.com/p/gxtforms/source/browse/trunk/gxtforms-demo/
@@ -21,6 +23,8 @@ The only thing that the demo doesn't really illustrate is the web.xml entries ne
     </servlet-mapping>
 }}}
 
+
+==Running the demo locally==
 
 If you're so inclined to run the demo application locally, check out the source from svn and execute:
 
