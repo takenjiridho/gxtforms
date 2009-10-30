@@ -20,3 +20,10 @@ The only thing that the demo doesn't really illustrate is the web.xml entries ne
         <url-pattern>/com.googlecode.gxtforms.demo.Application/FormService</url-pattern>
     </servlet-mapping>
 }}}
+
+
+If you're so inclined to run the demo application locally, check out the source from svn and execute:
+
+   mvn gwt:run
+
+from the root of the demo source.  You'll need the gxtforms library installed to your local repo first.
