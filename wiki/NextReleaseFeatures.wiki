@@ -1,4 +1,4 @@
-=summary= list of features for the 0.2 release
+#summary list of features for the 0.2 release
 
 == New Annotations ==
    * ListField
