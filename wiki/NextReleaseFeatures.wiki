@@ -1,0 +1,12 @@
+== New Annotations ==
+   * ListField
+
+== New Annotations Attributes ==
+   * fieldSet
+   * styleName
+   * enabled
+
+== New Client Side Components ==
+   * A FormPanel subclass that facilitates access to underlying fieldsets
+   * A FieldSet subclass that facilitates access to underlying fields
+
