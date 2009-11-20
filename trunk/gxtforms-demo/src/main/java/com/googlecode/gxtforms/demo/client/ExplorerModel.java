@@ -13,6 +13,7 @@ import java.util.List;
 import com.extjs.gxt.ui.client.data.BaseTreeModel;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.data.TreeModel;
+import com.googlecode.gxtforms.demo.client.examples.IndexedFormExample;
 import com.googlecode.gxtforms.demo.client.examples.SimpleFormExample;
 import com.googlecode.gxtforms.demo.client.images.ExampleImages;
 import com.googlecode.gxtforms.demo.client.model.Category;
@@ -26,6 +27,7 @@ public class ExplorerModel extends BaseTreeModel {
     public ExplorerModel() {
         Category grids = new Category("Dynamic Forms");
         grids.add("Simple Form", new SimpleFormExample(), ExampleImages.BUNDLE.simpleForm().getHTML());
+        grids.add("Indexed Form", new IndexedFormExample(), ExampleImages.BUNDLE.simpleForm().getHTML());
         add(grids);
         set("overview", new Entry("Overview", new OverviewPage(), null, true, false));
         loadEntries(this);

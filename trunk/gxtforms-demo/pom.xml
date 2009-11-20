@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.gxtforms</groupId>
     <artifactId>gxtforms-demo</artifactId>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <dependencies>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>com.googlecode.gxtforms</groupId>
             <artifactId>gxtforms</artifactId>
-            <version>0.1</version>
+            <version>0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -38,6 +38,11 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.extjs</groupId>
+            <artifactId>gxt</artifactId>
+            <version>2.0.1</version>
+        </dependency>        
     </dependencies>
 
 
