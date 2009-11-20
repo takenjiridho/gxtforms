@@ -29,6 +29,7 @@ import com.extjs.gxt.ui.client.widget.form.Validator;
 import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
 import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
+import com.googlecode.gxtforms.client.components.IndexedFormPanel;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
@@ -40,10 +41,20 @@ public class GXTFormBuilder {
 
     public static final int DEFAULT_LABEL_WIDTH = 150;
 
-    protected static final DateConverter dateConverter = new DateConverter();
-    
+    private boolean indexFormPanel;
+
     public GXTFormBuilder() {
+        this(false);
+    }
+
+    /**
+     * @param indexFormPanel
+     *            if true, the form panel will index Fields and FieldSets by
+     *            name and title respectively.
+     */
+    public GXTFormBuilder(boolean indexFormPanel) {
         super();
+        this.indexFormPanel = indexFormPanel;
     }
 
     public FormPanel buildFormPanel(FormConfiguration formConfig, Layout layout) {
@@ -70,9 +81,7 @@ public class GXTFormBuilder {
             FieldConfiguration fieldConfig = formConfig.getFieldConfiguration(field.getName());
             if (isEnumField(fieldConfig)) {
                 fieldBinding.setConvertor(new EnumConverter(fieldConfig));
-            } //else if (fieldConfig.getFieldType() == FieldType.Date) {
-//                fieldBinding.setConvertor(dateConverter);
-//            }
+            }
         }
 
         // clear validation errors -- don't want to see those on initial render
@@ -106,7 +115,13 @@ public class GXTFormBuilder {
     }
 
     protected FormPanel initFormPanel(FormPanelConfiguration config) {
-        FormPanel panel = new FormPanel();
+        FormPanel panel = null;
+        if (indexFormPanel) {
+            panel = new IndexedFormPanel();
+        } else {
+            panel = new FormPanel();
+        }
+        
         panel.setFrame(config.isFrame());
         panel.setAnimCollapse(config.isAnimCollapse());
         panel.setCollapsible(config.isCollapsible());
