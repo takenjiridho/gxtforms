@@ -1,0 +1,5 @@
+#summary Information about FormServices
+
+A FormService provides a GXT client app with a FormConfiguration which can be used by a client-side FormBuilder to create and bind a form panel.
+
+TODO: add a diagram of this process 
