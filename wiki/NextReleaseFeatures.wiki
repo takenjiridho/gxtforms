@@ -9,5 +9,8 @@
    * enabled
 
 == New Client Side Components ==
-   * A FormPanel subclass that facilitates access to underlying fieldsets
-   * A FieldSet subclass that facilitates access to underlying fields
+   * A FormPanel subclass that facilitates access to underlying fieldsets (completed in svn)
+   * A FieldSet subclass that facilitates access to underlying fields (completed in svn)
+
+== Support for nested beans ==
+   * related to fieldSets
