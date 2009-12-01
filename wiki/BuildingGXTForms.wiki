@@ -1,4 +1,4 @@
-#summary This page documents some issues associated with building gxtforms.
+#summary GXTForms dependencies are now in maven central, so builds are easy.
 
 This doc assumes you are familiar with maven and are able to check out the source code.
 
