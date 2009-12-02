@@ -16,11 +16,11 @@ import com.googlecode.gxtforms.client.FormServiceAsync;
 import com.googlecode.gxtforms.client.GXTFormBuilder;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
 
-public class DefaultsFormExample extends LayoutContainer {
+public class CustomStyleFormExample extends LayoutContainer {
 
     private VerticalPanel vp;
 
-    public DefaultsFormExample() {
+    public CustomStyleFormExample() {
         vp = new VerticalPanel();
         vp.setSpacing(10);
 
@@ -32,7 +32,7 @@ public class DefaultsFormExample extends LayoutContainer {
         add(vp);
 
         FormServiceAsync service = GWT.create(FormService.class);
-        service.getFormConfiguration(DefaultsForm.class.getName(), new AsyncCallback<FormConfiguration>() {
+        service.getFormConfiguration(CustomStyleForm.class.getName(), new AsyncCallback<FormConfiguration>() {
             public void onSuccess(FormConfiguration result) {
                 addForm(result);
             }
@@ -44,7 +44,7 @@ public class DefaultsFormExample extends LayoutContainer {
     }
 
     public void addForm(FormConfiguration config) {
-        final DefaultsForm form = new DefaultsForm();
+        final CustomStyleForm form = new CustomStyleForm();
         form.setDescription("This is a pre-filled field.");
         FormPanel panel = new GXTFormBuilder().buildFormPanel(config, form);
         Button submit = new Button("Test DataBinding", new SelectionListener<ButtonEvent>() {
