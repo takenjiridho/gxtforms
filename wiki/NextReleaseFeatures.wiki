@@ -4,9 +4,9 @@
    * ListField
 
 == New Annotations Attributes ==
-   * fieldSet
-   * styleName
-   * enabled
+   * fieldSet (completed in svn)
+   * styleName (completed in svn)
+   * enabled (completed in svn)
 
 == New Client Side Components ==
    * A FormPanel subclass that facilitates access to underlying fieldsets (completed in svn)
