@@ -26,6 +26,8 @@ public class FieldConfiguration implements Serializable {
     int validationDelay;
     boolean hideLabel;
     boolean readOnly;
+    String styleName;
+    boolean enabled;
     Orientation orientation;
     RegexWithMessage validator;
 
@@ -190,6 +192,22 @@ public class FieldConfiguration implements Serializable {
 
     public void setValidator(RegexWithMessage validator) {
         this.validator = validator;
+    }
+
+    public String getStyleName() {
+        return styleName;
+    }
+
+    public void setStyleName(String styleName) {
+        this.styleName = styleName;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 }

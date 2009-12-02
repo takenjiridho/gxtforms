@@ -63,6 +63,10 @@ public @interface DateField {
     boolean readOnly() default false;
     
     int maxLength() default 0;
+    
+    String styleName() default "";
+    
+    boolean enabled() default true;
  
     Class<? extends Validator<?>> validator() default NoopValidator.class;    
     

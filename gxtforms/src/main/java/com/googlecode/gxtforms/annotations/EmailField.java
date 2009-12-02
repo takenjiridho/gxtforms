@@ -64,6 +64,10 @@ public @interface EmailField {
     
     int maxLength() default 0;
     
+    String styleName() default "";
+    
+    boolean enabled() default true;
+    
     Class<? extends Validator<?>> validator() default EmailValidator.class;
     
     

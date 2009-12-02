@@ -218,6 +218,13 @@ public class GXTFormBuilder {
             if (StringUtils.isNotEmpty(messageTarget)) {
                 field.setMessageTarget(messageTarget);
             }
+            
+            String styleName = fieldConfig.getStyleName();
+            if (StringUtils.isNotEmpty(styleName)) {
+                field.addStyleName(styleName);
+            }
+            
+            field.setEnabled(fieldConfig.isEnabled());
         }
 
         return field;

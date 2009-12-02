@@ -436,3 +436,7 @@
 .icon-tabs {
   background-image: url(images/icons/tabs.gif) !important;
 }
+
+.custom-style {
+  color: green;
+}
