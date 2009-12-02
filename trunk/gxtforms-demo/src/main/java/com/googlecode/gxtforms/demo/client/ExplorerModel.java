@@ -32,7 +32,7 @@ public class ExplorerModel extends BaseTreeModel {
         grids.add("Simple Form", new SimpleFormExample(), ExampleImages.BUNDLE.simpleForm().getHTML());
         grids.add("Indexed Fields", new IndexedFormExample(), ExampleImages.BUNDLE.indexedForm().getHTML());
         grids.add("Custom Styles", new CustomStyleFormExample(), ExampleImages.BUNDLE.customStylesForm().getHTML());
-        grids.add("Field Sets", new FieldSetFormExample(), ExampleImages.BUNDLE.customStylesForm().getHTML());
+        grids.add("Field Sets", new FieldSetFormExample(), ExampleImages.BUNDLE.fieldSetForm().getHTML());
         add(grids);
         set("overview", new Entry("Overview", new OverviewPage(), null, true, false));
         loadEntries(this);

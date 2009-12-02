@@ -56,7 +56,6 @@ public class FieldSetFormExample extends LayoutContainer {
         });
         
         panel.addButton(submit);
-        vp.add(new Label("The name field has a custom style added, and the description field is disabled."));
         vp.add(panel);
         vp.layout();
     }
