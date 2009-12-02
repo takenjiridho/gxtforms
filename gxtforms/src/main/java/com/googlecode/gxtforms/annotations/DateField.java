@@ -47,27 +47,29 @@ public @interface DateField {
     String emptyText() default "";
 
     boolean autoValidate() default true;
-    
-    String labelSeparator() default ":"; 
+
+    String labelSeparator() default ":";
 
     String labelStyle() default "";
-    
+
     String messageTarget() default "";
-    
+
     boolean validateOnBlur() default false;
-    
+
     int validationDelay() default 200;
-    
+
     boolean hideLabel() default false;
-    
+
     boolean readOnly() default false;
-    
+
     int maxLength() default 0;
-    
+
     String styleName() default "";
-    
+
     boolean enabled() default true;
- 
-    Class<? extends Validator<?>> validator() default NoopValidator.class;    
-    
+
+    String fieldSet() default "";
+
+    Class<? extends Validator<?>> validator() default NoopValidator.class;
+
 }

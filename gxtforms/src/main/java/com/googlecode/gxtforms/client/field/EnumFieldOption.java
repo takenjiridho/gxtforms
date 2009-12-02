@@ -1,4 +1,4 @@
-package com.googlecode.gxtforms.client;
+package com.googlecode.gxtforms.client.field;
 
 @SuppressWarnings("serial")
 public class EnumFieldOption extends FieldOption<Enum<?>> {

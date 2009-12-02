@@ -1,4 +1,4 @@
-package com.googlecode.gxtforms.client;
+package com.googlecode.gxtforms.client.form;
 
 import java.io.Serializable;
 

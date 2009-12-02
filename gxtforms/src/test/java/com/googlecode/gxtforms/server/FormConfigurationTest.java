@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.googlecode.gxtforms.annotations.Form;
-import com.googlecode.gxtforms.client.FormPanelConfiguration;
 import com.googlecode.gxtforms.client.config.LabelAlign;
+import com.googlecode.gxtforms.client.form.FormPanelConfiguration;
 
 public class FormConfigurationTest {
 

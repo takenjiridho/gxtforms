@@ -10,10 +10,10 @@ import org.junit.Test;
 import com.googlecode.gxtforms.annotations.CharField;
 import com.googlecode.gxtforms.annotations.ChooseOneField;
 import com.googlecode.gxtforms.annotations.RadioField;
-import com.googlecode.gxtforms.client.FieldConfigurationException;
-import com.googlecode.gxtforms.client.FieldOption;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
+import com.googlecode.gxtforms.client.exceptions.FieldConfigurationException;
+import com.googlecode.gxtforms.client.field.FieldOption;
 
 public class SimpleFormImplTest {
 

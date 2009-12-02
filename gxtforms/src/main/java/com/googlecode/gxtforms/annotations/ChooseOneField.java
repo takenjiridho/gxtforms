@@ -68,6 +68,8 @@ public @interface ChooseOneField {
     
     boolean enabled() default true;
 
+    String fieldSet() default "";
+    
     Class<? extends Validator<?>> validator() default NoopValidator.class;    
     
 }
