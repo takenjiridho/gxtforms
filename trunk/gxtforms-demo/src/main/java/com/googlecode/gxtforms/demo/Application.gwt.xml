@@ -2,5 +2,4 @@
     <inherits name='com.googlecode.gxtforms.GXTForms'/>
     <inherits name='com.extjs.gxt.themes.Themes'/>
     <entry-point class='com.googlecode.gxtforms.demo.client.Application' />
-    
 </module>

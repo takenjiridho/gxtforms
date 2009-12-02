@@ -62,6 +62,10 @@ public @interface CharField {
 	
 	boolean readOnly() default false;
 	
+	String styleName() default "";
+	
+	boolean enabled() default true;
+	
 	int maxLength() default 0;
 	
 	Class<? extends Validator<?>> validator() default NoopValidator.class;

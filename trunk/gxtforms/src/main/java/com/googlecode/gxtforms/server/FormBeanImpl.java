@@ -125,6 +125,8 @@ public class FormBeanImpl implements FormBean {
             config.setValidateOnBlur((Boolean) invoke("validateOnBlur", formField));
             config.setValidationDelay((Integer) invoke("validationDelay", formField));
             config.setAutoValidate((Boolean) invoke("autoValidate", formField));
+            config.setEnabled((Boolean) invoke("enabled", formField));
+            config.setStyleName((String) invoke("styleName", formField));
             
             Class<? extends Validator<?>> validatorClass = (Class<? extends Validator<?>>) invoke("validator", formField);
             if (RegExValidator.class.isAssignableFrom(validatorClass)) {

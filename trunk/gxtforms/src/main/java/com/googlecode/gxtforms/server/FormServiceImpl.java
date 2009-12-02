@@ -1,7 +1,6 @@
 package com.googlecode.gxtforms.server;
 
 import java.util.HashMap;
-
 import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
