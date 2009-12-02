@@ -8,8 +8,8 @@ import com.googlecode.gxtforms.annotations.Form;
 import com.googlecode.gxtforms.annotations.TextAreaField;
 
 @SuppressWarnings("serial")
-@Form(heading = "Defaults Form", labelWidth = 100, fieldWidth = 150, width = 500, animCollapse = true)
-public class DefaultsForm implements BeanModelTag, Serializable {
+@Form(heading = "Custom Styles Form", labelWidth = 100, fieldWidth = 150, width = 500, animCollapse = true)
+public class CustomStyleForm implements BeanModelTag, Serializable {
 
     @CharField(index = 1, allowBlank = false, maxLength = 20, autoValidate = false, validateOnBlur = true, styleName="custom-style")
     private String name;
@@ -17,7 +17,7 @@ public class DefaultsForm implements BeanModelTag, Serializable {
     @TextAreaField(index = 4, maxLength = 255, enabled = false)
     private String description;
 
-    public DefaultsForm() {
+    public CustomStyleForm() {
         super();
     }
 
