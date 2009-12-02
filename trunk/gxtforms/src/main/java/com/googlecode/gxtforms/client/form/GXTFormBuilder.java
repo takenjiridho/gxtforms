@@ -1,4 +1,4 @@
-package com.googlecode.gxtforms.client;
+package com.googlecode.gxtforms.client.form;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ import com.extjs.gxt.ui.client.widget.form.CheckBox;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.DateField;
 import com.extjs.gxt.ui.client.widget.form.Field;
+import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.HiddenField;
 import com.extjs.gxt.ui.client.widget.form.Radio;
@@ -34,10 +35,14 @@ import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
 import com.googlecode.gxtforms.client.config.RegexWithMessage;
+import com.googlecode.gxtforms.client.converters.EnumConverter;
+import com.googlecode.gxtforms.client.exceptions.FieldConfigurationException;
+import com.googlecode.gxtforms.client.field.EnumFieldOption;
+import com.googlecode.gxtforms.client.field.FieldOption;
 import com.googlecode.gxtforms.client.utils.CollectionUtils;
 import com.googlecode.gxtforms.client.utils.StringUtils;
 
-public class GXTFormBuilder {
+public class GXTFormBuilder implements FormBuilder {
 
     public static final int DEFAULT_LABEL_WIDTH = 150;
 
@@ -57,15 +62,69 @@ public class GXTFormBuilder {
         this.indexFormPanel = indexFormPanel;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.googlecode.gxtforms.client.form.FormBuilder#buildFormPanel(com.googlecode
+     * .gxtforms.client.config.FormConfiguration,
+     * com.extjs.gxt.ui.client.widget.Layout)
+     */
     public FormPanel buildFormPanel(FormConfiguration formConfig, Layout layout) {
         FormPanel panel = initFormPanel(formConfig.getFormPanelConfiguration());
         panel.setLayout(layout);
+
+        FieldSet fieldSet = null;
+        String lastFieldSetTitle = null;
         for (FieldConfiguration fieldConfig : formConfig.getFieldConfigurations()) {
-            panel.add(buildField(fieldConfig));
+            Field<?> field = buildField(fieldConfig);
+            String fieldSetTitle = fieldConfig.getFieldSet();
+
+            if (fieldSet != null) {
+                if (StringUtils.isEmpty(fieldSetTitle) || fieldSetTitle.equals(lastFieldSetTitle)) {
+                    // add to existing field set
+                    fieldSet.add(field);
+                } else if (StringUtils.isNotEmpty(fieldSetTitle)) {
+                    // new field set
+                    fieldSet = newFieldSet(panel, field, fieldSetTitle, formConfig);
+                    lastFieldSetTitle = fieldSetTitle;
+                }
+            } else if (StringUtils.isNotEmpty(fieldSetTitle)) {
+                fieldSet = newFieldSet(panel, field, fieldSetTitle, formConfig);
+                lastFieldSetTitle = fieldSetTitle;
+            } else {
+                // not part of a field set
+                panel.add(field);
+            }
+
         }
         return panel;
     }
 
+    protected FieldSet newFieldSet(FormPanel panel, Field<?> field, String fieldSetTitle, FormConfiguration formConfig) {
+        FieldSet fieldSet;
+        fieldSet = new FieldSet();
+        fieldSet.setWidth("95%");
+        FormLayout layout = new FormLayout();
+        FormPanelConfiguration formPanelConfiguration = formConfig.getFormPanelConfiguration();
+        layout.setLabelAlign(LabelAlign.valueOf(formPanelConfiguration.getLabelAlign().name()));
+        int labelWidth = formPanelConfiguration.getLabelWidth();
+        setLabelWidth(layout, labelWidth);
+        fieldSet.setLayout(layout);
+        fieldSet.setHeading(fieldSetTitle);
+        fieldSet.add(field);
+        panel.add(fieldSet);
+        return fieldSet;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.googlecode.gxtforms.client.form.FormBuilder#bind(com.googlecode.gxtforms
+     * .client.config.FormConfiguration,
+     * com.extjs.gxt.ui.client.widget.form.FormPanel, java.lang.Object)
+     */
     public void bind(FormConfiguration formConfig, FormPanel formPanel, Object bean) {
         final FormBinding binding = new FormBinding(formPanel, true);
         if (bean instanceof ModelData) {
@@ -94,24 +153,41 @@ public class GXTFormBuilder {
         });
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.googlecode.gxtforms.client.form.FormBuilder#buildFormPanel(com.googlecode
+     * .gxtforms.client.config.FormConfiguration, java.lang.Object)
+     */
     public FormPanel buildFormPanel(FormConfiguration formConfig, Object bean) {
         FormPanel panel = buildFormPanel(formConfig);
         bind(formConfig, panel, bean);
         return panel;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.googlecode.gxtforms.client.form.FormBuilder#buildFormPanel(com.googlecode
+     * .gxtforms.client.config.FormConfiguration)
+     */
     public FormPanel buildFormPanel(FormConfiguration formConfig) {
         FormLayout layout = new FormLayout();
         FormPanelConfiguration formPanelConfiguration = formConfig.getFormPanelConfiguration();
         layout.setLabelAlign(LabelAlign.valueOf(formPanelConfiguration.getLabelAlign().name()));
         int labelWidth = formPanelConfiguration.getLabelWidth();
+        setLabelWidth(layout, labelWidth);
+        return buildFormPanel(formConfig, layout);
+    }
+
+    private void setLabelWidth(FormLayout layout, int labelWidth) {
         if (labelWidth > 0) {
             layout.setLabelWidth(labelWidth);
         } else {
             layout.setLabelWidth(DEFAULT_LABEL_WIDTH);
         }
-
-        return buildFormPanel(formConfig, layout);
     }
 
     protected FormPanel initFormPanel(FormPanelConfiguration config) {
@@ -121,7 +197,7 @@ public class GXTFormBuilder {
         } else {
             panel = new FormPanel();
         }
-        
+
         panel.setFrame(config.isFrame());
         panel.setAnimCollapse(config.isAnimCollapse());
         panel.setCollapsible(config.isCollapsible());
@@ -218,12 +294,12 @@ public class GXTFormBuilder {
             if (StringUtils.isNotEmpty(messageTarget)) {
                 field.setMessageTarget(messageTarget);
             }
-            
+
             String styleName = fieldConfig.getStyleName();
             if (StringUtils.isNotEmpty(styleName)) {
                 field.addStyleName(styleName);
             }
-            
+
             field.setEnabled(fieldConfig.isEnabled());
         }
 

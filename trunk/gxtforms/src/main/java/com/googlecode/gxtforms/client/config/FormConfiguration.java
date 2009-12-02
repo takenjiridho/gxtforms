@@ -3,7 +3,7 @@ package com.googlecode.gxtforms.client.config;
 import java.io.Serializable;
 import java.util.List;
 
-import com.googlecode.gxtforms.client.FormPanelConfiguration;
+import com.googlecode.gxtforms.client.form.FormPanelConfiguration;
 
 @SuppressWarnings("serial")
 public class FormConfiguration implements Serializable {

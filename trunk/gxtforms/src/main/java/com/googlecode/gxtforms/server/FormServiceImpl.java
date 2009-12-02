@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.googlecode.gxtforms.client.FormConfigurationException;
-import com.googlecode.gxtforms.client.FormService;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
+import com.googlecode.gxtforms.client.exceptions.FormConfigurationException;
+import com.googlecode.gxtforms.client.form.FormService;
 
 @SuppressWarnings("serial")
 public class FormServiceImpl extends RemoteServiceServlet implements FormService {

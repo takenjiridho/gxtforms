@@ -23,7 +23,9 @@ public @interface HiddenField {
      * Underlying form field name.
      */
     String name() default "";
-    
+
     int index() default 0;
-    
+
+    String fieldSet() default "";
+
 }

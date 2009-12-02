@@ -10,10 +10,10 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.googlecode.gxtforms.client.FormService;
-import com.googlecode.gxtforms.client.FormServiceAsync;
-import com.googlecode.gxtforms.client.GXTFormBuilder;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
+import com.googlecode.gxtforms.client.form.FormService;
+import com.googlecode.gxtforms.client.form.FormServiceAsync;
+import com.googlecode.gxtforms.client.form.GXTFormBuilder;
 
 public class SimpleFormExample extends LayoutContainer {
 

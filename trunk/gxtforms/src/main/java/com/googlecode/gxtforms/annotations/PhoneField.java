@@ -19,7 +19,7 @@ public @interface PhoneField {
      * FieldType that will be rendered.
      */
     FieldType fieldType() default FieldType.Text;
-    
+
     /**
      * Displayed to users.
      */
@@ -29,7 +29,7 @@ public @interface PhoneField {
      * Underlying form field name.
      */
     String name() default "";
-    
+
     /**
      * The fields order with respect to other fields.
      */
@@ -43,30 +43,32 @@ public @interface PhoneField {
     /**
      * Value displayed to a user when there is no value in a field.
      */
-    String emptyText() default "";  
-    
+    String emptyText() default "";
+
     boolean autoValidate() default true;
-    
-    String labelSeparator() default ":"; 
+
+    String labelSeparator() default ":";
 
     String labelStyle() default "";
-    
+
     String messageTarget() default "";
-    
+
     boolean validateOnBlur() default false;
-    
+
     int validationDelay() default 200;
-    
+
     boolean hideLabel() default false;
-    
+
     boolean readOnly() default false;
-    
+
     int maxLength() default 0;
-    
+
     String styleName() default "";
-    
+
     boolean enabled() default true;
-    
+
+    String fieldSet() default "";
+
     Class<? extends Validator<?>> validator() default PhoneValidator.class;
 
 }

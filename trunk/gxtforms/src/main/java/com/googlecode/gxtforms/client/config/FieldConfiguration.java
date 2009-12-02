@@ -3,7 +3,7 @@ package com.googlecode.gxtforms.client.config;
 import java.io.Serializable;
 import java.util.List;
 
-import com.googlecode.gxtforms.client.FieldOption;
+import com.googlecode.gxtforms.client.field.FieldOption;
 
 @SuppressWarnings("serial")
 public class FieldConfiguration implements Serializable {
@@ -28,10 +28,19 @@ public class FieldConfiguration implements Serializable {
     boolean readOnly;
     String styleName;
     boolean enabled;
+    String fieldSet;
     Orientation orientation;
     RegexWithMessage validator;
 
     public FieldConfiguration() {
+    }
+
+    public String getFieldSet() {
+        return fieldSet;
+    }
+
+    public void setFieldSet(String fieldSet) {
+        this.fieldSet = fieldSet;
     }
 
     public String getName() {

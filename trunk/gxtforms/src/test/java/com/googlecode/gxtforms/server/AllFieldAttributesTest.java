@@ -28,6 +28,9 @@ public class AllFieldAttributesTest {
         assertEquals("target", config.getMessageTarget());
         assertEquals("style", config.getLabelStyle());
         assertEquals(50, config.getMaxLength());
+        assertEquals("styleName", config.getStyleName());
+        assertEquals(false, config.isEnabled());
+        assertEquals("fieldSet", config.getFieldSet());
     }
 
 }
@@ -37,7 +40,7 @@ class FormA extends FormBeanImpl {
     @SuppressWarnings("unused")
     @CharField(autoValidate = true, emptyText = "empty", fieldLabel = "label", index = 3, hideLabel = true, fieldType = FieldType.TextArea, 
             labelSeparator = "-", labelStyle = "style", messageTarget = "target", name = "nameXyz", readOnly = true, allowBlank = false, 
-            validateOnBlur = false, validationDelay = 2000, maxLength = 50)
+            validateOnBlur = false, validationDelay = 2000, maxLength = 50, styleName="styleName", enabled=false, fieldSet = "fieldSet")
     private String charField;
 
 }

@@ -68,6 +68,8 @@ public @interface CharField {
 	
 	int maxLength() default 0;
 	
+	String fieldSet() default "";
+	
 	Class<? extends Validator<?>> validator() default NoopValidator.class;
 	
 }

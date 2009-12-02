@@ -1,4 +1,4 @@
-package com.googlecode.gxtforms.client;
+package com.googlecode.gxtforms.client.form;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

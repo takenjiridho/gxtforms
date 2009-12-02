@@ -17,13 +17,13 @@ import com.googlecode.gxtforms.annotations.Form;
 import com.googlecode.gxtforms.annotations.FormAnnotation;
 import com.googlecode.gxtforms.annotations.HiddenField;
 import com.googlecode.gxtforms.annotations.RadioField;
-import com.googlecode.gxtforms.client.EnumFieldOption;
-import com.googlecode.gxtforms.client.FieldConfigurationException;
-import com.googlecode.gxtforms.client.FormPanelConfiguration;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 import com.googlecode.gxtforms.client.config.Orientation;
 import com.googlecode.gxtforms.client.config.RegexWithMessage;
+import com.googlecode.gxtforms.client.exceptions.FieldConfigurationException;
+import com.googlecode.gxtforms.client.field.EnumFieldOption;
+import com.googlecode.gxtforms.client.form.FormPanelConfiguration;
 import com.googlecode.gxtforms.validators.RegExValidator;
 import com.googlecode.gxtforms.validators.Validator;
 
@@ -97,7 +97,7 @@ public class FormBeanImpl implements FormBean {
         if (StringUtils.isEmpty(config.getName())) {
             config.setName(field.getName());
         }
-        
+        config.setFieldSet((String) invoke("fieldSet", formField));
         
         config.setFieldType((FieldType) invoke("fieldType", formField));
         if (!(formField instanceof HiddenField)) {

@@ -1,4 +1,4 @@
-package com.googlecode.gxtforms.client;
+package com.googlecode.gxtforms.client.converters;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.widget.form.Radio;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
+import com.googlecode.gxtforms.client.field.EnumFieldOption;
 
 public class EnumConverter extends Converter {
     
