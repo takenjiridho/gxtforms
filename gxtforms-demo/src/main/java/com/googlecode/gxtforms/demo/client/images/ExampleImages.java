@@ -13,5 +13,8 @@ public interface ExampleImages extends ImageBundle {
     AbstractImagePrototype indexedForm();
     
     AbstractImagePrototype customStylesForm();
+
+    AbstractImagePrototype fieldSetForm();
+    
     
 }
