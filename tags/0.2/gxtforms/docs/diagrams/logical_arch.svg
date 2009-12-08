@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="44cm" height="23cm" viewBox="10 89 872 455" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="118" y="90" width="526" height="150"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="118" y="90" width="526" height="150"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="381" y="168.9">
+      <tspan x="381" y="168.9"></tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="139" y="477" width="475" height="66"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="139" y="477" width="475" height="66"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="376.5" y="513.9">
+      <tspan x="376.5" y="513.9"></tspan>
+    </text>
+  </g>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="160" y="503">
+    <tspan x="160" y="503">Annotated POJO</tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="285" y="506">
+    <tspan x="285" y="506">This is your model class annotated</tspan>
+    <tspan x="285" y="522">with @CharField, @EmailField, etc.</tspan>
+  </text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="12" y1="302" x2="881" y2="301"/>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="66" y="361">
+    <tspan x="66" y="361">Server side processing</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="137" y="158" width="481" height="72"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="137" y="158" width="481" height="72"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="377.5" y="197.9">
+      <tspan x="377.5" y="197.9"></tspan>
+    </text>
+  </g>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="169.5" y="191">
+    <tspan x="169.5" y="191">GXTFormBuilder</tspan>
+    <tspan x="169.5" y="207"></tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="304.5" y="181">
+    <tspan x="304.5" y="181">Creates a FormPanel, based on the </tspan>
+    <tspan x="304.5" y="197">FormConfiguration returned from the server </tspan>
+    <tspan x="304.5" y="213">and binds a POJO instance to FormPanel.</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="138" y="265" width="438" height="76"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="138" y="265" width="438" height="76"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="357" y="306.9">
+      <tspan x="357" y="306.9"></tspan>
+    </text>
+  </g>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="153.5" y="288">
+    <tspan x="153.5" y="288">Form Configuration</tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="282.5" y="308">
+    <tspan x="282.5" y="308">This is a GWT serializable object</tspan>
+    <tspan x="282.5" y="324">with data needed to render a form.</tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="492" y="306">
+    <tspan x="492" y="306"></tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="138" y="372" width="475" height="83"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="138" y="372" width="475" height="83"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="375.5" y="417.4">
+      <tspan x="375.5" y="417.4"></tspan>
+    </text>
+  </g>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="159" y="389.5">
+    <tspan x="159" y="389.5">FormService </tspan>
+    <tspan x="159" y="405.5">Implementation</tspan>
+    <tspan x="159" y="421.5"></tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="284" y="391.5">
+    <tspan x="284" y="391.5">This is a GWT Remote Service providing </tspan>
+    <tspan x="284" y="407.5">FormConfiguration objects based on annotated </tspan>
+    <tspan x="284" y="423.5">POJOs, the GXTForms library provides a simple</tspan>
+    <tspan x="284" y="439.5">implementation.</tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="62" y="256">
+    <tspan x="62" y="256">Client side processing</tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="370" y="414">
+    <tspan x="370" y="414"></tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="596.923" y1="252.736" x2="596.077" y2="359.264"/>
+    <polygon style="fill: #000000" points="596.982,245.236 601.903,255.275 596.923,252.736 591.903,255.196 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="596.982,245.236 601.903,255.275 596.923,252.736 591.903,255.196 "/>
+    <polygon style="fill: #000000" points="596.018,366.764 591.097,356.725 596.077,359.264 601.097,356.804 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="596.018,366.764 591.097,356.725 596.077,359.264 601.097,356.804 "/>
+  </g>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="603" y="328">
+    <tspan x="603" y="328">RPC Call</tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:12.7998;font-family:sanserif;font-style:normal;font-weight:normal" x="147" y="122">
+    <tspan x="147" y="122">Your client side GWT/GXT component, panel, what have you, that makes </tspan>
+    <tspan x="147" y="138">a RPC call to retrieve a FormConfiguration and render a form.</tspan>
+  </text>
+</svg>
