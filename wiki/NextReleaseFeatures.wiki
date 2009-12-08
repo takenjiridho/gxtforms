@@ -1,16 +1,4 @@
-#summary list of features for the 0.2 release
+#summary list of features for the next release
 
 == New Annotations ==
    * ListField
-
-== New Annotations Attributes ==
-   * fieldSet (completed in svn)
-   * styleName (completed in svn)
-   * enabled (completed in svn)
-
-== New Client Side Components ==
-   * A FormPanel subclass that facilitates access to underlying fieldsets (completed in svn)
-   * A FieldSet subclass that facilitates access to underlying fields (completed in svn)
-
-== Support for nested beans ==
-   * related to fieldSets
