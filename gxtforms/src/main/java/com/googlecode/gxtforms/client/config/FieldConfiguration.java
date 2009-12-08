@@ -5,10 +5,16 @@ import java.util.List;
 
 import com.googlecode.gxtforms.client.field.FieldOption;
 
+/**
+ * This is a transfer object for all the different types of field
+ * configurations.
+ * 
+ */
 @SuppressWarnings("serial")
 public class FieldConfiguration implements Serializable {
 
     String name;
+    String title;
     String fieldLabel;
     boolean allowBlank;
     int maxLength;
@@ -33,6 +39,14 @@ public class FieldConfiguration implements Serializable {
     RegexWithMessage validator;
 
     public FieldConfiguration() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getFieldSet() {

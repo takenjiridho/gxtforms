@@ -15,6 +15,8 @@ public interface ExampleImages extends ImageBundle {
     AbstractImagePrototype customStylesForm();
 
     AbstractImagePrototype fieldSetForm();
+
+    AbstractImagePrototype nestedBeansForm();
     
     
 }

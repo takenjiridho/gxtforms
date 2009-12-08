@@ -16,6 +16,7 @@ import com.extjs.gxt.ui.client.data.TreeModel;
 import com.googlecode.gxtforms.demo.client.examples.CustomStyleFormExample;
 import com.googlecode.gxtforms.demo.client.examples.FieldSetFormExample;
 import com.googlecode.gxtforms.demo.client.examples.IndexedFormExample;
+import com.googlecode.gxtforms.demo.client.examples.NestedBeansFormExample;
 import com.googlecode.gxtforms.demo.client.examples.SimpleFormExample;
 import com.googlecode.gxtforms.demo.client.images.ExampleImages;
 import com.googlecode.gxtforms.demo.client.model.Category;
@@ -33,6 +34,7 @@ public class ExplorerModel extends BaseTreeModel {
         grids.add("Indexed Fields", new IndexedFormExample(), ExampleImages.BUNDLE.indexedForm().getHTML());
         grids.add("Custom Styles", new CustomStyleFormExample(), ExampleImages.BUNDLE.customStylesForm().getHTML());
         grids.add("Field Sets", new FieldSetFormExample(), ExampleImages.BUNDLE.fieldSetForm().getHTML());
+        grids.add("Nested Beans", new NestedBeansFormExample(), ExampleImages.BUNDLE.nestedBeansForm().getHTML());
         add(grids);
         set("overview", new Entry("Overview", new OverviewPage(), null, true, false));
         loadEntries(this);
