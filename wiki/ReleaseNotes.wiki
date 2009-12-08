@@ -1,8 +1,5 @@
 #summary Lists Release Notes for the different versions
 
-=0.1=
-
-Initial release.  Simple databinding and basic field annotations.
 
 =0.2=
 
@@ -18,4 +15,7 @@ This release adds a few more field attributes, field sets, and support for neste
  
  * Support for nested beans
 
+=0.1=
+
+Initial release.  Simple databinding and basic field annotations.
 
