@@ -3,6 +3,7 @@ package com.googlecode.gxtforms.client.form;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
+import com.googlecode.gxtforms.client.exceptions.FormConfigurationException;
 
 @RemoteServiceRelativePath("FormService")
 public interface FormService extends RemoteService {
@@ -13,6 +14,6 @@ public interface FormService extends RemoteService {
      * @param className the fully qualified class name for a class.  This value is passed to Class.forName(String name)
      * @return
      */
-    FormConfiguration getFormConfiguration(String className);
+    FormConfiguration getFormConfiguration(String className) throws FormConfigurationException;
 
 }
