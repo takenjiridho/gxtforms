@@ -9,12 +9,12 @@ Initial release.  Simple databinding and basic field annotations.
 This release adds a few more field attributes, field sets, and support for nested beans.
 
 * New Annotations Attributes
-** fieldSet
-** styleName
-** enabled
+ * fieldSet
+ * styleName
+ * enabled
 
 * New Client Side Components
-** A FormPanel subclass that facilitates access to underlying fieldsets (completed in svn)
-** A FieldSet subclass that facilitates access to underlying fields (completed in svn)
+ * A FormPanel subclass that facilitates access to underlying fieldsets
+ * A FieldSet subclass that facilitates access to underlying fields
 
 * Support for nested beans
