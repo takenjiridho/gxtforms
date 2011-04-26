@@ -17,20 +17,19 @@ import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.Layout;
 import com.extjs.gxt.ui.client.widget.form.CheckBox;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
+import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
 import com.extjs.gxt.ui.client.widget.form.DateField;
 import com.extjs.gxt.ui.client.widget.form.Field;
 import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.form.HiddenField;
 import com.extjs.gxt.ui.client.widget.form.Radio;
 import com.extjs.gxt.ui.client.widget.form.RadioGroup;
 import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.form.Validator;
-import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
-import com.extjs.gxt.ui.client.widget.form.FormPanel.LabelAlign;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
-import com.googlecode.gxtforms.client.components.IndexedFormPanel;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
@@ -42,24 +41,13 @@ import com.googlecode.gxtforms.client.field.FieldOption;
 import com.googlecode.gxtforms.client.utils.CollectionUtils;
 import com.googlecode.gxtforms.client.utils.StringUtils;
 
-public class GXTFormBuilder implements FormBuilder {
+public abstract class GXTFormBuilder<T extends FormPanel> implements FormBuilder<T> {
 
     public static final int DEFAULT_LABEL_WIDTH = 150;
 
-    private boolean indexFormPanel;
 
     public GXTFormBuilder() {
-        this(false);
-    }
-
-    /**
-     * @param indexFormPanel
-     *            if true, the form panel will index Fields and FieldSets by
-     *            name and title respectively.
-     */
-    public GXTFormBuilder(boolean indexFormPanel) {
         super();
-        this.indexFormPanel = indexFormPanel;
     }
 
     /*
@@ -70,8 +58,8 @@ public class GXTFormBuilder implements FormBuilder {
      * .gxtforms.client.config.FormConfiguration,
      * com.extjs.gxt.ui.client.widget.Layout)
      */
-    public FormPanel buildFormPanel(FormConfiguration formConfig, Layout layout) {
-        FormPanel panel = initFormPanel(formConfig.getFormPanelConfiguration());
+    public T buildFormPanel(FormConfiguration formConfig, Layout layout) {
+        T panel = initFormPanel(formConfig.getFormPanelConfiguration());
         panel.setLayout(layout);
 
         FieldSet fieldSet = null;
@@ -139,7 +127,7 @@ public class GXTFormBuilder implements FormBuilder {
             Field<Object> field = fieldBinding.getField();
             FieldConfiguration fieldConfig = formConfig.getFieldConfiguration(field.getName());
             if (isEnumField(fieldConfig)) {
-                fieldBinding.setConvertor(new EnumConverter(fieldConfig));
+                fieldBinding.setConverter(new EnumConverter(fieldConfig));
             }
         }
 
@@ -160,8 +148,8 @@ public class GXTFormBuilder implements FormBuilder {
      * com.googlecode.gxtforms.client.form.FormBuilder#buildFormPanel(com.googlecode
      * .gxtforms.client.config.FormConfiguration, java.lang.Object)
      */
-    public FormPanel buildFormPanel(FormConfiguration formConfig, Object bean) {
-        FormPanel panel = buildFormPanel(formConfig);
+    public T buildFormPanel(FormConfiguration formConfig, Object bean) {
+        T panel = buildFormPanel(formConfig);
         bind(formConfig, panel, bean);
         return panel;
     }
@@ -173,7 +161,7 @@ public class GXTFormBuilder implements FormBuilder {
      * com.googlecode.gxtforms.client.form.FormBuilder#buildFormPanel(com.googlecode
      * .gxtforms.client.config.FormConfiguration)
      */
-    public FormPanel buildFormPanel(FormConfiguration formConfig) {
+    public T buildFormPanel(FormConfiguration formConfig) {
         FormLayout layout = new FormLayout();
         FormPanelConfiguration formPanelConfiguration = formConfig.getFormPanelConfiguration();
         layout.setLabelAlign(LabelAlign.valueOf(formPanelConfiguration.getLabelAlign().name()));
@@ -190,13 +178,8 @@ public class GXTFormBuilder implements FormBuilder {
         }
     }
 
-    protected FormPanel initFormPanel(FormPanelConfiguration config) {
-        FormPanel panel = null;
-        if (indexFormPanel) {
-            panel = new IndexedFormPanel();
-        } else {
-            panel = new FormPanel();
-        }
+    protected T initFormPanel(FormPanelConfiguration config) {
+        T panel = constructPanel();
 
         panel.setFrame(config.isFrame());
         panel.setAnimCollapse(config.isAnimCollapse());

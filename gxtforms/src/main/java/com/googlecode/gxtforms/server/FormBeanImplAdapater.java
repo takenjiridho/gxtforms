@@ -2,6 +2,7 @@ package com.googlecode.gxtforms.server;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.List;
 
 import com.googlecode.gxtforms.annotations.Form;
 
@@ -14,8 +15,8 @@ public class FormBeanImplAdapater extends FormBeanImpl {
     }
 
     @Override
-    public Field[] getMemberFields() {
-        return target.getDeclaredFields();
+    public List<Field> getMemberFields() {
+        return getMemberFields(target);
     }
 
     @Override
