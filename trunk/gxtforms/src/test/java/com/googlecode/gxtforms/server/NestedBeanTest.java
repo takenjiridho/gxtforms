@@ -14,7 +14,7 @@ public class NestedBeanTest {
 
     @Test
     public void nestedBeanFieldSet() {
-        List<FieldConfiguration> fields = new Bean().getFields();
+        List<FieldConfiguration> fields = new Bean2().getFields();
         debugFields(fields);
         
         FieldConfiguration char1 = fields.get(0);
@@ -58,6 +58,12 @@ public class NestedBeanTest {
         assertEquals("char3", char3.getFieldSet());
         assertEquals(9, char3.getIndex());
         
+        FieldConfiguration char4 = fields.get(9);
+        assertEquals("char4", char4.getName());
+        assertEquals("char3", char4.getFieldSet());
+        assertEquals(10, char4.getIndex());
+        
+        
     }
     
     private void debugFields(List<FieldConfiguration> fields) {
@@ -65,6 +71,13 @@ public class NestedBeanTest {
             System.out.println(fieldConfiguration.getName() + ":" + fieldConfiguration.getIndex());
         }
     }
+    
+}
+
+class Bean2 extends Bean {
+
+    @CharField(index = 6, fieldSet = "char3")
+    String char4;
     
 }
 

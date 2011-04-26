@@ -4,14 +4,16 @@ import com.extjs.gxt.ui.client.widget.Layout;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
 
-public interface FormBuilder {
+public interface FormBuilder<T extends FormPanel> {
 
-    FormPanel buildFormPanel(FormConfiguration formConfig, Layout layout);
+    T constructPanel();
+    
+    T buildFormPanel(FormConfiguration formConfig, Layout layout);
 
-    void bind(FormConfiguration formConfig, FormPanel formPanel, Object bean);
+    void bind(FormConfiguration formConfig, T formPanel, Object bean);
 
-    FormPanel buildFormPanel(FormConfiguration formConfig, Object bean);
+    T buildFormPanel(FormConfiguration formConfig, Object bean);
 
-    FormPanel buildFormPanel(FormConfiguration formConfig);
+    T buildFormPanel(FormConfiguration formConfig);
 
 }

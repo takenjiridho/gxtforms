@@ -3,9 +3,10 @@ package com.googlecode.gxtforms.server;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +14,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
 import com.googlecode.gxtforms.annotations.CheckBoxField;
-import com.googlecode.gxtforms.annotations.NestedBeanField;
 import com.googlecode.gxtforms.annotations.Form;
 import com.googlecode.gxtforms.annotations.FormAnnotation;
 import com.googlecode.gxtforms.annotations.HiddenField;
+import com.googlecode.gxtforms.annotations.NestedBeanField;
 import com.googlecode.gxtforms.annotations.RadioField;
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
 import com.googlecode.gxtforms.client.config.FieldType;
@@ -34,7 +35,8 @@ public class FormBeanImpl implements FormBean {
         List<FieldConfiguration> fields = new ArrayList<FieldConfiguration>();
 
         // process non-nested attributes
-        for (Map.Entry<Field, Annotation> fieldEntry : getFieldAnnotations().entrySet()) {
+        Map<Field, Annotation> fieldAnnotations = getFieldAnnotations();
+        for (Map.Entry<Field, Annotation> fieldEntry : fieldAnnotations.entrySet()) {
             Annotation annotation = fieldEntry.getValue();
             Field field = fieldEntry.getKey();
             if (!(annotation instanceof NestedBeanField)) {
@@ -45,7 +47,7 @@ public class FormBeanImpl implements FormBean {
         // process nested beans
         int indexModifier = 0;
         List<FieldConfiguration> nestedFields = new ArrayList<FieldConfiguration>();
-        for (Map.Entry<Field, Annotation> fieldEntry : getFieldAnnotations().entrySet()) {
+        for (Map.Entry<Field, Annotation> fieldEntry : fieldAnnotations.entrySet()) {
             Annotation annotation = fieldEntry.getValue();
             Field field = fieldEntry.getKey();
 
@@ -60,12 +62,13 @@ public class FormBeanImpl implements FormBean {
                     }
                 }
 
+                int currentIndex = indexModifier + thisIndex - 1;
                 for (FieldConfiguration fieldConfiguration : currentNestedFields) {
-                    fieldConfiguration.setIndex(fieldConfiguration.getIndex() + indexModifier + thisIndex - 1);                    
+                    fieldConfiguration.setIndex(fieldConfiguration.getIndex() + currentIndex);                    
                     fieldConfiguration.setName(field.getName() + "." + fieldConfiguration.getName());
                 }
                 nestedFields.addAll(currentNestedFields);
-                List<FieldConfiguration> remainingFields = getFieldsAfterIndex(fields, thisIndex + indexModifier - 1);
+                List<FieldConfiguration> remainingFields = getFieldsAfterIndex(fields, currentIndex);
                 for (FieldConfiguration fieldConfiguration : remainingFields) {
                     fieldConfiguration.setIndex(fieldConfiguration.getIndex() + currentNestedFields.size() - 1);
                 }
@@ -210,8 +213,8 @@ public class FormBeanImpl implements FormBean {
     }
 
     public Map<Field, Annotation> getFieldAnnotations() {
-        Map<Field, Annotation> allFieldAnnotations = new HashMap<Field, Annotation>();
-        Field[] fields = getMemberFields();
+        Map<Field, Annotation> allFieldAnnotations = new LinkedHashMap<Field, Annotation>();
+        List<Field> fields = getMemberFields();
         for (Field field : fields) {
             List<Annotation> aFieldsAnnotations = getFormFields(field, field.getAnnotations());
             if (aFieldsAnnotations.size() > 0) {
@@ -221,9 +224,19 @@ public class FormBeanImpl implements FormBean {
         return allFieldAnnotations;
     }
 
-    public Field[] getMemberFields() {
-        return getClass().getDeclaredFields();
+    public List<Field> getMemberFields() {
+        return getMemberFields(getClass());
     }
+    
+    public List<Field> getMemberFields(Class<?> clazz) {
+        List<Field> fields = new ArrayList<Field>();
+        if (clazz.getSuperclass() != null) {
+            fields.addAll(getMemberFields(clazz.getSuperclass()));
+        }
+        fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+        return fields;
+    }
+
 
     public List<Annotation> getFormFields(Field field, Annotation[] annots) {
         List<Annotation> annotations = new ArrayList<Annotation>();
