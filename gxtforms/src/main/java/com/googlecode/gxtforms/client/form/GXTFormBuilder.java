@@ -214,7 +214,7 @@ public abstract class GXTFormBuilder<T extends FormPanel> implements FormBuilder
         return panel;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     protected Field<?> buildField(FieldConfiguration fieldConfig) {
         Field<?> field = initField(fieldConfig);
         field.setFieldLabel(fieldConfig.getFieldLabel());
@@ -289,7 +289,7 @@ public abstract class GXTFormBuilder<T extends FormPanel> implements FormBuilder
         return field;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     protected Field<?> initField(FieldConfiguration fieldConfig) {
         List<? extends FieldOption<?>> options = fieldConfig.getOptions();
         switch (fieldConfig.getFieldType()) {

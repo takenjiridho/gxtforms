@@ -72,4 +72,6 @@ public @interface EmailField {
 
     Class<? extends Validator<?>> validator() default EmailValidator.class;
 
+    boolean important() default false;
+
 }

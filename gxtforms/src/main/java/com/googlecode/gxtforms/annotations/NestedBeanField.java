@@ -15,7 +15,7 @@ import com.googlecode.gxtforms.client.config.FieldType;
 @FormAnnotation()
 public @interface NestedBeanField {
 
-    String fieldSet();
+    String fieldSet() default "";
     
     int index() default 0;
 
@@ -26,5 +26,7 @@ public @interface NestedBeanField {
     boolean enabled() default true;
     
     FieldType fieldType() default FieldType.FieldSet;
+    
+    boolean important() default false;
     
 }

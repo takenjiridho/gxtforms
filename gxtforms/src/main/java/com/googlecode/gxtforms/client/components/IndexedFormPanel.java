@@ -63,7 +63,7 @@ public class IndexedFormPanel extends FormPanel {
      * 
      * @param widget a widget being added to the form
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     private void indexWidget(Widget widget) {
         if (widget instanceof Field) {
             Field field = (Field) widget;

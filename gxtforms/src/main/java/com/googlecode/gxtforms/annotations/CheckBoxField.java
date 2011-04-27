@@ -66,5 +66,7 @@ public @interface CheckBoxField {
     String fieldSet() default "";
 
     Class<? extends Validator<?>> validator() default NoopValidator.class;
+    
+    boolean important() default false;
 
 }

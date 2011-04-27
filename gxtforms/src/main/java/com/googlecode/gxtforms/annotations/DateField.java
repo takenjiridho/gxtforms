@@ -72,4 +72,6 @@ public @interface DateField {
 
     Class<? extends Validator<?>> validator() default NoopValidator.class;
 
+    boolean important() default false;
+
 }
