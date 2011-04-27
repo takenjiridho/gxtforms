@@ -28,4 +28,6 @@ public @interface HiddenField {
 
     String fieldSet() default "";
 
+    boolean important() default false;
+
 }

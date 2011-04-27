@@ -71,4 +71,6 @@ public @interface PhoneField {
 
     Class<? extends Validator<?>> validator() default PhoneValidator.class;
 
+    boolean important() default false;
+
 }

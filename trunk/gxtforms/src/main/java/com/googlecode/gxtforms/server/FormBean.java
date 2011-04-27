@@ -1,5 +1,6 @@
 package com.googlecode.gxtforms.server;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 import com.googlecode.gxtforms.client.config.FieldConfiguration;
@@ -14,6 +15,15 @@ public interface FormBean {
      * @return
      */
     List<FieldConfiguration> getFields();
+    
+    /**
+     * Returns the configuration objects needed to render fields. The list's
+     * order is determined by annotation index values.  The "cascading" attributes of the parent have priority.
+     * 
+     * @return
+     */
+    List<FieldConfiguration> getFields(Annotation parent);
+    
 
     /**
      * Returns the configuration needed to render a form panel.

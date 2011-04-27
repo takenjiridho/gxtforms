@@ -1,5 +1,7 @@
 package com.googlecode.gxtforms.server;
 
+import static com.googlecode.gxtforms.annotations.AnnotationConstant.*;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
+import com.googlecode.gxtforms.annotations.AnnotationConstant;
 import com.googlecode.gxtforms.annotations.CheckBoxField;
 import com.googlecode.gxtforms.annotations.Form;
 import com.googlecode.gxtforms.annotations.FormAnnotation;
@@ -32,6 +35,10 @@ import com.googlecode.gxtforms.validators.Validator;
 public class FormBeanImpl implements FormBean {
 
     public List<FieldConfiguration> getFields() {
+        return getFields(null);
+    }
+
+    public List<FieldConfiguration> getFields(Annotation parent) {
         List<FieldConfiguration> fields = new ArrayList<FieldConfiguration>();
 
         // process non-nested attributes
@@ -40,7 +47,7 @@ public class FormBeanImpl implements FormBean {
             Annotation annotation = fieldEntry.getValue();
             Field field = fieldEntry.getKey();
             if (!(annotation instanceof NestedBeanField)) {
-                fields.add(buildFieldConfiguration(field, annotation));
+                fields.add(buildFieldConfiguration(field, parent, annotation));
             }
         }
 
@@ -48,35 +55,29 @@ public class FormBeanImpl implements FormBean {
         int indexModifier = 0;
         List<FieldConfiguration> nestedFields = new ArrayList<FieldConfiguration>();
         for (Map.Entry<Field, Annotation> fieldEntry : fieldAnnotations.entrySet()) {
-            Annotation annotation = fieldEntry.getValue();
+            Annotation parentAnot = fieldEntry.getValue();
             Field field = fieldEntry.getKey();
 
-            if (annotation instanceof NestedBeanField) {
+            if (parentAnot instanceof NestedBeanField) {
                 FormBean bean = FormBeanUtils.initFormBean(field.getType());
-                int thisIndex = (Integer) invoke("index", annotation);
-                List<FieldConfiguration> currentNestedFields = bean.getFields();
-                if (!currentNestedFields.isEmpty()) {
-                    FieldConfiguration firstField = currentNestedFields.get(0);
-                    if (StringUtils.isEmpty(firstField.getFieldSet())) {
-                        firstField.setFieldSet((String) invoke("fieldSet", annotation));
-                    }
-                }
+                int thisIndex = (Integer) buildAttribute(INDEX, parentAnot);
+                List<FieldConfiguration> children = bean.getFields(parentAnot);
 
                 int currentIndex = indexModifier + thisIndex - 1;
-                for (FieldConfiguration fieldConfiguration : currentNestedFields) {
-                    fieldConfiguration.setIndex(fieldConfiguration.getIndex() + currentIndex);                    
+                for (FieldConfiguration fieldConfiguration : children) {
+                    fieldConfiguration.setIndex(fieldConfiguration.getIndex() + currentIndex);
                     fieldConfiguration.setName(field.getName() + "." + fieldConfiguration.getName());
                 }
-                nestedFields.addAll(currentNestedFields);
+                nestedFields.addAll(children);
                 List<FieldConfiguration> remainingFields = getFieldsAfterIndex(fields, currentIndex);
                 for (FieldConfiguration fieldConfiguration : remainingFields) {
-                    fieldConfiguration.setIndex(fieldConfiguration.getIndex() + currentNestedFields.size() - 1);
+                    fieldConfiguration.setIndex(fieldConfiguration.getIndex() + children.size() - 1);
                 }
-                
-                indexModifier += currentNestedFields.size() - 1;
+
+                indexModifier += children.size() - 1;
             }
         }
-        
+
         fields.addAll(nestedFields);
 
         Collections.sort(fields, new Comparator<FieldConfiguration>() {
@@ -91,7 +92,7 @@ public class FormBeanImpl implements FormBean {
 
         return fields;
     }
-    
+
     private List<FieldConfiguration> getFieldsAfterIndex(List<FieldConfiguration> fields, int index) {
         List<FieldConfiguration> fieldsAfter = new ArrayList<FieldConfiguration>();
         for (FieldConfiguration fieldConfiguration : fields) {
@@ -105,7 +106,7 @@ public class FormBeanImpl implements FormBean {
     public FormPanelConfiguration getFormConfiguration() {
         FormPanelConfiguration config = new FormPanelConfiguration();
         Form annotation = getFormAnnotation();
-        
+
         config.setAnimCollapse(annotation.animCollapse());
         config.setCollapsible(annotation.collapsible());
         config.setFrame(annotation.frame());
@@ -143,47 +144,46 @@ public class FormBeanImpl implements FormBean {
         throw new RuntimeException("No @Form annotation on: " + getClass().getName());
     }
 
-    @SuppressWarnings("unchecked")
-    public FieldConfiguration buildFieldConfiguration(Field field, Annotation formField) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public FieldConfiguration buildFieldConfiguration(Field field, Annotation parentField, Annotation formField) {
         FieldConfiguration config = new FieldConfiguration();
-        config.setFieldType((FieldType) invoke("fieldType", formField));
-        config.setIndex((Integer) invoke("index", formField));
-        config.setName((String) invoke("name", formField));
+        config.setFieldType((FieldType) buildAttribute(FIELD_TYPE, parentField, formField));
+        config.setIndex((Integer) buildAttribute(INDEX, parentField, formField));
+        config.setName((String) buildAttribute(NAME, parentField, formField));
         if (StringUtils.isEmpty(config.getName())) {
             config.setName(field.getName());
         }
-        config.setFieldSet((String) invoke("fieldSet", formField));
+        config.setFieldSet((String) buildAttribute(FIELD_SET, parentField, formField));
 
         if (!(formField instanceof HiddenField)) {
 
             if (!(formField instanceof CheckBoxField) && !(formField instanceof RadioField)) {
-                config.setEmptyText((String) invoke("emptyText", formField));
+                config.setEmptyText((String) buildAttribute(EMPTY_TEXT, parentField, formField));
             }
 
             if (formField instanceof RadioField) {
-                config.setOrientation((Orientation) invoke("orientation", formField));
+                config.setOrientation((Orientation) buildAttribute(ORIENTATION, parentField, formField));
             }
 
-            config.setFieldLabel((String) invoke("fieldLabel", formField));
+            config.setFieldLabel((String) buildAttribute(FIELD_LABEL, parentField, formField));
             if (StringUtils.isEmpty(config.getFieldLabel())) {
                 config.setFieldLabel(WordUtils.capitalize(config.getName()));
             }
 
-            config.setHideLabel((Boolean) invoke("hideLabel", formField));
-            config.setReadOnly((Boolean) invoke("readOnly", formField));
-            config.setAllowBlank((Boolean) invoke("allowBlank", formField));
-            config.setLabelSeparator((String) invoke("labelSeparator", formField));
-            config.setLabelStyle((String) invoke("labelStyle", formField));
-            config.setMaxLength((Integer) invoke("maxLength", formField));
-            config.setMessageTarget((String) invoke("messageTarget", formField));
-            config.setValidateOnBlur((Boolean) invoke("validateOnBlur", formField));
-            config.setValidationDelay((Integer) invoke("validationDelay", formField));
-            config.setAutoValidate((Boolean) invoke("autoValidate", formField));
-            config.setEnabled((Boolean) invoke("enabled", formField));
-            config.setStyleName((String) invoke("styleName", formField));
+            config.setHideLabel((Boolean) buildAttribute(HIDE_LABEL, parentField, formField));
+            config.setReadOnly((Boolean) buildAttribute(READ_ONLY, parentField, formField));
+            config.setAllowBlank((Boolean) buildAttribute(ALLOW_BLANK, parentField, formField));
+            config.setLabelSeparator((String) buildAttribute(LABEL_SEPARATOR, parentField, formField));
+            config.setLabelStyle((String) buildAttribute(LABEL_STYLE, parentField, formField));
+            config.setMaxLength((Integer) buildAttribute(MAX_LENGTH, parentField, formField));
+            config.setMessageTarget((String) buildAttribute(MESSAGE_TARGET, parentField, formField));
+            config.setValidateOnBlur((Boolean) buildAttribute(VALIDATE_ON_BLUR, parentField, formField));
+            config.setValidationDelay((Integer) buildAttribute(VALIDATION_DELAY, parentField, formField));
+            config.setAutoValidate((Boolean) buildAttribute(AUTO_VALIDATE, parentField, formField));
+            config.setEnabled((Boolean) buildAttribute(ENABLED, parentField, formField));
+            config.setStyleName((String) buildAttribute(STYLE_NAME, parentField, formField));
 
-            Class<? extends Validator<?>> validatorClass = (Class<? extends Validator<?>>) invoke("validator",
-                    formField);
+            Class<? extends Validator<?>> validatorClass = (Class<? extends Validator<?>>) buildAttribute(VALIDATOR, parentField, formField);
             if (RegExValidator.class.isAssignableFrom(validatorClass)) {
                 try {
                     RegExValidator validator = (RegExValidator) validatorClass.newInstance();
@@ -204,11 +204,33 @@ public class FormBeanImpl implements FormBean {
         return config;
     }
 
-    public Object invoke(String methodName, Object o) {
+    protected Object buildAttribute(AnnotationConstant attribute, Annotation annotation) {
+        return buildAttribute(attribute, null, annotation);
+    }
+
+    protected Object buildAttribute(AnnotationConstant attribute, Annotation parentAnnotation, Annotation childAnnotation) {
+            String label = attribute.getLabel();
+            boolean parentImportant = (parentAnnotation != null)?(Boolean) invoke(IMPORTANT.getLabel(), parentAnnotation):false;
+            boolean childImportant = (Boolean) invoke(IMPORTANT.getLabel(), childAnnotation);
+            if (attribute.isCascades() && parentAnnotation != null && (parentImportant || !childImportant)) {
+                Object o = invoke(label, parentAnnotation);
+                if (o == null || o.equals(attribute.getDefaultValue())) {
+                    // use child
+                    return invoke(label, childAnnotation);
+                }
+                // use parent
+                return o;
+            } else {
+                // use child
+                return invoke(label, childAnnotation);
+            }
+    }
+
+    private Object invoke(String name, Annotation o) {
         try {
-            return o.getClass().getMethod(methodName, (Class<?>[]) null).invoke(o, (Object[]) null);
+            return o.getClass().getMethod(name, (Class<?>[]) null).invoke(o, (Object[]) null);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -227,7 +249,7 @@ public class FormBeanImpl implements FormBean {
     public List<Field> getMemberFields() {
         return getMemberFields(getClass());
     }
-    
+
     public List<Field> getMemberFields(Class<?> clazz) {
         List<Field> fields = new ArrayList<Field>();
         if (clazz.getSuperclass() != null) {
@@ -237,11 +259,10 @@ public class FormBeanImpl implements FormBean {
         return fields;
     }
 
-
     public List<Annotation> getFormFields(Field field, Annotation[] annots) {
         List<Annotation> annotations = new ArrayList<Annotation>();
         for (Annotation annot : annots) {
-            if (annot.annotationType().getAnnotation(FormAnnotation.class) != null) {
+            if (annot.annotationType().isAnnotationPresent(FormAnnotation.class)) {
                 annotations.add(annot);
             }
         }
