@@ -16,6 +16,7 @@ import com.googlecode.gxtforms.client.config.FormConfiguration;
 import com.googlecode.gxtforms.client.form.FormService;
 import com.googlecode.gxtforms.client.form.FormServiceAsync;
 import com.googlecode.gxtforms.client.form.GXTFormBuilder;
+import com.googlecode.gxtforms.client.form.IndexedFormBuilder;
 
 public class NestedBeansFormExample extends LayoutContainer {
 
@@ -46,7 +47,7 @@ public class NestedBeansFormExample extends LayoutContainer {
 
     public void addForm(FormConfiguration config) {
         final NestedBeansForm form = new NestedBeansForm();
-        IndexedFormPanel panel = (IndexedFormPanel) new GXTFormBuilder(true).buildFormPanel(config, form);
+        IndexedFormPanel panel = new IndexedFormBuilder().buildFormPanel(config, form);
         Button submit = new Button("Test DataBinding", new SelectionListener<ButtonEvent>() {
 
             @Override

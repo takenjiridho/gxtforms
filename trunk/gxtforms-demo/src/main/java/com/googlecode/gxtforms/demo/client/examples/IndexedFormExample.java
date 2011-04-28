@@ -15,7 +15,7 @@ import com.googlecode.gxtforms.client.components.IndexedFormPanel;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
 import com.googlecode.gxtforms.client.form.FormService;
 import com.googlecode.gxtforms.client.form.FormServiceAsync;
-import com.googlecode.gxtforms.client.form.GXTFormBuilder;
+import com.googlecode.gxtforms.client.form.IndexedFormBuilder;
 
 public class IndexedFormExample extends LayoutContainer {
 
@@ -46,7 +46,7 @@ public class IndexedFormExample extends LayoutContainer {
 
     public void addForm(FormConfiguration config) {
         final IndexedForm form = new IndexedForm();
-        IndexedFormPanel panel = (IndexedFormPanel) new GXTFormBuilder(true).buildFormPanel(config, form);
+        IndexedFormPanel panel = new IndexedFormBuilder().buildFormPanel(config, form);
         Button submit = new Button("Test DataBinding", new SelectionListener<ButtonEvent>() {
 
             @Override

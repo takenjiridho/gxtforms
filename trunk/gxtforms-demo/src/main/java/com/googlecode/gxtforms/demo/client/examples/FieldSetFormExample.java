@@ -10,11 +10,10 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Label;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
+import com.googlecode.gxtforms.client.form.BasicFormBuilder;
 import com.googlecode.gxtforms.client.form.FormService;
 import com.googlecode.gxtforms.client.form.FormServiceAsync;
-import com.googlecode.gxtforms.client.form.GXTFormBuilder;
 
 public class FieldSetFormExample extends LayoutContainer {
 
@@ -45,7 +44,7 @@ public class FieldSetFormExample extends LayoutContainer {
 
     public void addForm(FormConfiguration config) {
         final FieldSetForm form = new FieldSetForm();
-        FormPanel panel = new GXTFormBuilder().buildFormPanel(config, form);
+        FormPanel panel = new BasicFormBuilder().buildFormPanel(config, form);
         Button submit = new Button("Test DataBinding", new SelectionListener<ButtonEvent>() {
 
             @Override
