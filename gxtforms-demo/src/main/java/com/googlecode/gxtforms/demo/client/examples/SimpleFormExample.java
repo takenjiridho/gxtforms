@@ -11,9 +11,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.googlecode.gxtforms.client.config.FormConfiguration;
+import com.googlecode.gxtforms.client.form.BasicFormBuilder;
 import com.googlecode.gxtforms.client.form.FormService;
 import com.googlecode.gxtforms.client.form.FormServiceAsync;
-import com.googlecode.gxtforms.client.form.GXTFormBuilder;
 
 public class SimpleFormExample extends LayoutContainer {
 
@@ -44,7 +44,7 @@ public class SimpleFormExample extends LayoutContainer {
 
     public void addForm(FormConfiguration config) {
         final SimpleForm form = new SimpleForm();
-        FormPanel panel = new GXTFormBuilder().buildFormPanel(config, form);
+        FormPanel panel = new BasicFormBuilder().buildFormPanel(config, form);
         Button submit = new Button("Test DataBinding", new SelectionListener<ButtonEvent>() {
 
             @Override
